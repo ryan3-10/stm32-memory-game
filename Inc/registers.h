@@ -5,6 +5,7 @@
 
 #define GPIOA_BASE 	(0x40020000UL)
 #define GPIOD_BASE 	(0x40020C00UL)
+#define GPIOE_BASE 	(0x40021000UL)
 #define RCC_BASE 	(0x40023800UL)
 
 typedef struct
@@ -39,6 +40,7 @@ typedef struct
 
 #define GPIOA 	((GPIO_PORT_t*)GPIOA_BASE)
 #define GPIOD 	((GPIO_PORT_t*)GPIOD_BASE)
+#define GPIOE 	((GPIO_PORT_t*)GPIOE_BASE)
 #define RCC		((RCC_t*)RCC_BASE)
 
 

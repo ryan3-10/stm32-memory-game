@@ -25,6 +25,15 @@
 
 int main(void)
 {
+	// Enable clock for port D
+	RCC-> AHB1ENR |= 1 << 4;
+
+	// Set the pins controlling the LEDs to output
+	gpio_init_output(GPIOE, 7);
+	gpio_init_output(GPIOE, 9);
+	gpio_init_output(GPIOE, 11);
+	gpio_init_output(GPIOE, 13);
+
     /* Loop forever */
 	for(;;);
 }
