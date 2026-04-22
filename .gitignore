@@ -54,3 +54,7 @@ dkms.conf
 # debug information files
 *.dwo
 Debug/
+.metadata/
+stm32-memory-game.launch
+.settings/language.settings.xml
+
