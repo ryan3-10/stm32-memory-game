@@ -56,4 +56,4 @@ dkms.conf
 Debug/
 .metadata/
 stm32-memory-game.launch
-.seetings/
+.settings/
