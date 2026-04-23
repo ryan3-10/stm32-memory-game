@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define GPIOB_BASE	(0x40020400UL)
+#define GPIOC_BASE	(0x40020800UL)
 #define GPIOE_BASE 	(0x40021000UL)
 #define RCC_BASE 	(0x40023800UL)
 
@@ -37,7 +37,7 @@ typedef struct
 	volatile uint32_t AHB1ENR;	// 0x30
 } RCC_t;
 
-#define GPIOB 	((GPIO_PORT_t*)GPIOB_BASE)
+#define GPIOC 	((GPIO_PORT_t*)GPIOC_BASE)
 #define GPIOE 	((GPIO_PORT_t*)GPIOE_BASE)
 #define RCC		((RCC_t*)RCC_BASE)
 
