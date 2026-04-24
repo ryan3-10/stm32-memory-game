@@ -27,7 +27,7 @@ int main(void)
 {
 	srand(456);
 	GAME game = get_new_game();
-    /* Loop forever */
+
 	while(1) {
 		switch (game.state) {
 			case STATE_GAME_INIT:
@@ -40,7 +40,7 @@ int main(void)
 				break;
 			case STATE_SEQUENCE:
 				display_sequence(&game);
-				//game.state = STATE_WAIT_INPUT;
+				game.state = STATE_WAIT_INPUT;
 				break;
 			case STATE_WAIT_INPUT:
 				break;
