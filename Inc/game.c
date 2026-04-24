@@ -1,3 +1,8 @@
+#include<game.h>
+#include <gpio.h>
+
+int8_t sequence[50];
+
 void init_game() {
 	// Enable clock for ports C and E
 	RCC->AHB1ENR |= 1 << 2;
@@ -22,4 +27,13 @@ void init_game() {
 	gpio_set_pullup(GPIOC, 6);
 }
 
+void wait_to_start() {
+	// just wait for the user to press the blue button
+	gpio_write(GPIOE, 13, 1);
+	while (
+			gpio_read(GPIOC, 5)
+	);
+
+	gpio_write(GPIOE, 13, 0);
+}
 

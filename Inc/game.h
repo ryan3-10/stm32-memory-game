@@ -1,7 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <gpio.h>
+
 
 typedef enum {
 	STATE_GAME_INIT,
@@ -12,5 +12,6 @@ typedef enum {
 } STATE;
 
 void init_game();
+void wait_to_start();
 
 #endif /* GAME_H_ */

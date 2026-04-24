@@ -23,10 +23,11 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+STATE state = STATE_GAME_INIT;
+int8_t score = 0;
+
 int main(void)
 {
-	STATE state = STATE_GAME_INIT;
-
     /* Loop forever */
 	for(;;) {
 		switch (state) {
@@ -35,6 +36,8 @@ int main(void)
 				state = STATE_WAIT_START;
 				break;
 			case STATE_WAIT_START:
+				wait_to_start();
+				state = STATE_SEQUENCE;
 				break;
 			case STATE_SEQUENCE:
 				break;
