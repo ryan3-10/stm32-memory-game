@@ -34,6 +34,26 @@ void turn_off(LIGHT light) {
 	}
 }
 
+uint8_t is_pressed(BUTTON button) {
+	uint8_t output;
+	switch (button) {
+	case BUTTON_RED:
+		output = !gpio_read(BUTTON_PORT, RED_BUTTON_PIN);
+		break;
+	case BUTTON_WHITE:
+		output = !gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN);
+		break;
+	case BUTTON_BLUE:
+		output = !gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN);
+		break;
+	case BUTTON_YELLOW:
+		output = !gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN);
+		break;
+	}
+
+	return output;
+}
+
 BUTTON get_input() {
 	while (1) {
 		if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) return BUTTON_RED;

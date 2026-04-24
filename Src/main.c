@@ -25,7 +25,7 @@
 
 int main(void)
 {
-	srand(456);
+	srand(0);
 	GAME game = get_new_game();
 
 	while(1) {
@@ -43,6 +43,7 @@ int main(void)
 				game.state = STATE_USER_ATTEMPT;
 				break;
 			case STATE_USER_ATTEMPT:
+				user_attempt(&game);
 				break;
 			case STATE_GAME_OVER:
 				break;

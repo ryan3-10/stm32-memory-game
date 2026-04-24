@@ -44,15 +44,35 @@ void wait_to_start() {
 }
 
 void display_sequence(GAME* game) {
-	game->sequence[game->round++] = rand() % 4;
+	game->sequence[game->round++] = 3;
+	for (uint32_t j = 0; j < 600000; ++j);
 
-	for (uint32_t i = 0; i < game->round; ++i) {
+	for (uint8_t i = 0; i < game->round; ++i) {
 		LIGHT light = game->sequence[i];
 		turn_on(light);
 
 		for (uint32_t j = 0; j < 600000; ++j);
 		turn_off(light);
 		for (uint32_t j = 0; j < 300000; ++j);
+	}
+}
+
+void user_attempt(GAME* game) {
+	for (uint8_t i = 0; i < game->round && game->state != STATE_GAME_OVER; ++i) {
+		BUTTON expected = game->sequence[i];
+		BUTTON pressed = get_input();
+
+		turn_on((LIGHT)pressed);
+		while (is_pressed(pressed));
+		turn_off((LIGHT)pressed);
+
+		if (expected != pressed) {
+			game->state = STATE_GAME_OVER;
+		}
+	}
+
+	if (game->state != STATE_GAME_OVER) {
+		game->state = STATE_SEQUENCE;
 	}
 }
 
