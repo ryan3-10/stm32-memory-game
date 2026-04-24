@@ -44,7 +44,7 @@ void wait_to_start() {
 }
 
 void display_sequence(GAME* game) {
-	game->sequence[game->round++] = 3;
+	game->sequence[game->round++] = rand() % 4;
 	for (uint32_t j = 0; j < 600000; ++j);
 
 	for (uint8_t i = 0; i < game->round; ++i) {
