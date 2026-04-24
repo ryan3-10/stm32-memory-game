@@ -1,6 +1,8 @@
 #ifndef COMPONENTS_H_
 #define COMPONENTS_H_
 
+#include <gpio.h>
+
 // Ports
 #define LIGHT_PORT	(GPIOE)
 #define BUTTON_PORT	(GPIOC)
@@ -16,8 +18,6 @@
 #define WHITE_BUTTON_PIN	(0x4u)
 #define BLUE_BUTTON_PIN 	(0x5u)
 #define YELLOW_BUTTON_PIN	(0x6u)
-
-#include <gpio.h>
 
 typedef enum {
 	LIGHT_RED,
