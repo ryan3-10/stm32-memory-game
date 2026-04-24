@@ -16,7 +16,7 @@
  ******************************************************************************
  */
 
-#include <gpio.h>
+#include <game.h>
 #include <stdint.h>
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
@@ -25,8 +25,23 @@
 
 int main(void)
 {
+	STATE state = STATE_GAME_INIT;
+
     /* Loop forever */
 	for(;;) {
-
+		switch (state) {
+			case STATE_GAME_INIT:
+				init_game();
+				state = STATE_WAIT_START;
+				break;
+			case STATE_WAIT_START:
+				break;
+			case STATE_SEQUENCE:
+				break;
+			case STATE_WAIT_INPUT:
+				break;
+			case STATE_GAME_OVER:
+				break;
+		}
 	}
 }
