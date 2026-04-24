@@ -35,31 +35,5 @@ void wait_to_start() {
 			gpio_read(GPIOC, 5)
 	);
 	turn_off(LIGHT_BLUE);
-
-	while(1) {
-		if (is_pressed(BUTTON_RED)) {
-			turn_on(LIGHT_RED);
-		} else {
-			turn_off(LIGHT_RED);
-		}
-
-		if (is_pressed(BUTTON_WHITE)) {
-			turn_on(LIGHT_WHITE);
-		} else {
-			turn_off(LIGHT_WHITE);
-		}
-
-		if (is_pressed(BUTTON_BLUE)) {
-			turn_on(LIGHT_BLUE);
-		} else {
-			turn_off(LIGHT_BLUE);
-		}
-
-		if (is_pressed(BUTTON_YELLOW)) {
-			turn_on(LIGHT_YELLOW);
-		} else {
-			turn_off(LIGHT_YELLOW);
-		}
-	}
 }
 
