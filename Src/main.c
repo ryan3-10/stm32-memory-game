@@ -25,19 +25,22 @@
 
 int main(void)
 {
-	game = get_new_game();
+	srand(456);
+	GAME game = get_new_game();
     /* Loop forever */
 	while(1) {
-		switch (state) {
+		switch (game.state) {
 			case STATE_GAME_INIT:
 				init_game();
-				state = STATE_WAIT_START;
+				game.state = STATE_WAIT_START;
 				break;
 			case STATE_WAIT_START:
 				wait_to_start();
-				state = STATE_SEQUENCE;
+				game.state = STATE_SEQUENCE;
 				break;
 			case STATE_SEQUENCE:
+				display_sequence(&game);
+				//game.state = STATE_WAIT_INPUT;
 				break;
 			case STATE_WAIT_INPUT:
 				break;

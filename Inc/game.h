@@ -13,12 +13,13 @@ typedef enum {
 
 typedef struct {
 	STATE state;
-	uint32_t score;
-	BUTTON sequence[50];
+	uint32_t round;
+	LIGHT sequence[50];
 } GAME;
 
 GAME get_new_game();
 void init_game();
 void wait_to_start();
+void display_sequence(GAME* game);
 
 #endif /* GAME_H_ */

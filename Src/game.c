@@ -1,13 +1,13 @@
-#include <components.h>
 #include <game.h>
 #include <gpio.h>
+#include <stdlib.h>
 
 int8_t sequence[50];
 
 GAME get_new_game() {
 	GAME game = {
 		.state = STATE_GAME_INIT,
-		.score = 0,
+		.round = 0,
 		.sequence = {}
 	};
 	return game;
@@ -42,5 +42,18 @@ void wait_to_start() {
 	turn_on(LIGHT_BLUE);
 	while (get_input() != BUTTON_BLUE);
 	turn_off(LIGHT_BLUE);
+}
+
+void display_sequence(GAME* game) {
+	game->sequence[game->round++] = rand() % 4;
+
+	for (uint32_t i = 0; i < game->round; ++i) {
+		LIGHT light = game->sequence[i];
+		turn_on(light);
+
+		for (uint32_t j = 0; j < 600000; ++j);
+		turn_off(light);
+		for (uint32_t j = 0; j < 300000; ++j);
+	}
 }
 

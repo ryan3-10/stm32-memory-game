@@ -42,7 +42,3 @@ BUTTON get_input() {
 		if (!gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN)) return BUTTON_YELLOW;
 	}
 }
-
-
-
-
