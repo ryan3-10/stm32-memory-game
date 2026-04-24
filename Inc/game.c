@@ -31,9 +31,7 @@ void init_game() {
 void wait_to_start() {
 	// Wait for the user to press the blue button
 	turn_on(LIGHT_BLUE);
-	while (
-			gpio_read(GPIOC, 5)
-	);
+	while (!is_pressed(BUTTON_BLUE));
 	turn_off(LIGHT_BLUE);
 }
 
