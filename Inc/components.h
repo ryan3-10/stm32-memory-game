@@ -1,0 +1,37 @@
+#ifndef COMPONENTS_H_
+#define COMPONENTS_H_
+
+#define LIGHT_PORT	(GPIOE)
+#define BUTTON_PORT	(GPIOC)
+
+#define	RED_LIGHT_PIN 		(0x6u)
+#define	WHITE_LIGHT_PIN 	(0x2u)
+#define BLUE_LIGHT_PIN 		(0xDu)
+#define YELLOW_LIGHT_PIN	(0xFu)
+
+#define RED_BUTTON_PIN		(0x3u)
+#define WHITE_BUTTON_PIN	(0x4u)
+#define BLUE_BUTTON_PIN 	(0x5u)
+#define YELLOW_BUTTON_PIN	(0x6u)
+
+#include <gpio.h>
+
+typedef enum {
+	LIGHT_RED,
+	LIGHT_WHITE,
+	LIGHT_BLUE,
+	LIGHT_YELLOW
+} LIGHT;
+
+typedef enum {
+	BUTTON_RED,
+	BUTTON_WHITE,
+	BUTTON_BLUE,
+	BUTTON_YELLOW
+} BUTTON;
+
+void turn_on(LIGHT light);
+void turn_off(LIGHT light);
+uint8_t is_pressed(BUTTON button);
+
+#endif /* COMPONENTS_H_ */

@@ -1,4 +1,5 @@
-#include<game.h>
+#include <components.h>
+#include <game.h>
 #include <gpio.h>
 
 int8_t sequence[50];
@@ -28,12 +29,37 @@ void init_game() {
 }
 
 void wait_to_start() {
-	// just wait for the user to press the blue button
-	gpio_write(GPIOE, 13, 1);
+	// Wait for the user to press the blue button
+	turn_on(LIGHT_BLUE);
 	while (
 			gpio_read(GPIOC, 5)
 	);
+	turn_off(LIGHT_BLUE);
 
-	gpio_write(GPIOE, 13, 0);
+	while(1) {
+		if (is_pressed(BUTTON_RED)) {
+			turn_on(LIGHT_RED);
+		} else {
+			turn_off(LIGHT_RED);
+		}
+
+		if (is_pressed(BUTTON_WHITE)) {
+			turn_on(LIGHT_WHITE);
+		} else {
+			turn_off(LIGHT_WHITE);
+		}
+
+		if (is_pressed(BUTTON_BLUE)) {
+			turn_on(LIGHT_BLUE);
+		} else {
+			turn_off(LIGHT_BLUE);
+		}
+
+		if (is_pressed(BUTTON_YELLOW)) {
+			turn_on(LIGHT_YELLOW);
+		} else {
+			turn_off(LIGHT_YELLOW);
+		}
+	}
 }
 
