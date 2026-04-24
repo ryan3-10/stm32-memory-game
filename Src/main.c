@@ -40,9 +40,9 @@ int main(void)
 				break;
 			case STATE_SEQUENCE:
 				display_sequence(&game);
-				game.state = STATE_WAIT_INPUT;
+				game.state = STATE_USER_ATTEMPT;
 				break;
-			case STATE_WAIT_INPUT:
+			case STATE_USER_ATTEMPT:
 				break;
 			case STATE_GAME_OVER:
 				break;

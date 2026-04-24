@@ -7,7 +7,7 @@ typedef enum {
 	STATE_GAME_INIT,
 	STATE_WAIT_START,
 	STATE_SEQUENCE,
-	STATE_WAIT_INPUT,
+	STATE_USER_ATTEMPT,
 	STATE_GAME_OVER
 } STATE;
 
@@ -21,5 +21,6 @@ GAME get_new_game();
 void init_game();
 void wait_to_start();
 void display_sequence(GAME* game);
+void user_attempt(GAME* game);
 
 #endif /* GAME_H_ */
