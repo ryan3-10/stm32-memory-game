@@ -62,3 +62,13 @@ BUTTON get_input() {
 		if (!gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN)) return BUTTON_YELLOW;
 	}
 }
+
+void delay(uint32_t count) {
+	for (volatile uint32_t i = 0; i < count; ++i);
+}
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+#include <components.h>
 #include <game.h>
 #include <gpio.h>
 #include <stdlib.h>
@@ -45,15 +46,15 @@ void wait_to_start() {
 
 void display_sequence(GAME* game) {
 	game->sequence[game->round++] = rand() % 4;
-	for (uint32_t j = 0; j < 600000; ++j);
+	delay(600000);
 
 	for (uint8_t i = 0; i < game->round; ++i) {
 		LIGHT light = game->sequence[i];
 		turn_on(light);
 
-		for (uint32_t j = 0; j < 600000; ++j);
+		delay(600000);
 		turn_off(light);
-		for (uint32_t j = 0; j < 300000; ++j);
+		delay(300000);
 	}
 }
 

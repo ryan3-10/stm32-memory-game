@@ -37,5 +37,6 @@ void turn_on(LIGHT light);
 void turn_off(LIGHT light);
 uint8_t is_pressed(BUTTON button);
 BUTTON get_input();
+void delay(uint32_t count);
 
 #endif /* COMPONENTS_H_ */
