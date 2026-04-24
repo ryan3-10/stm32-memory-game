@@ -8,7 +8,6 @@ GAME get_new_game() {
 	GAME game = {
 		.state = STATE_GAME_INIT,
 		.round = 0,
-		.sequence = {}
 	};
 	return game;
 }
