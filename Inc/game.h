@@ -1,7 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-
+#include <components.h>
 
 typedef enum {
 	STATE_GAME_INIT,
@@ -11,6 +11,13 @@ typedef enum {
 	STATE_GAME_OVER
 } STATE;
 
+typedef struct {
+	STATE state;
+	uint32_t score;
+	BUTTON sequence[50];
+} GAME;
+
+GAME get_new_game();
 void init_game();
 void wait_to_start();
 

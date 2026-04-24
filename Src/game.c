@@ -4,6 +4,15 @@
 
 int8_t sequence[50];
 
+GAME get_new_game() {
+	GAME game = {
+		.state = STATE_GAME_INIT,
+		.score = 0,
+		.sequence = {}
+	};
+	return game;
+}
+
 void init_game() {
 	// Enable clock for ports C and E
 	RCC->AHB1ENR |= 1 << 2;

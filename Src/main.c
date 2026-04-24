@@ -16,7 +16,6 @@
  ******************************************************************************
  */
 
-#include <components.h>
 #include <game.h>
 #include <stdint.h>
 
@@ -24,13 +23,11 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-STATE state = STATE_GAME_INIT;
-int8_t score = 0;
-
 int main(void)
 {
+	game = get_new_game();
     /* Loop forever */
-	for(;;) {
+	while(1) {
 		switch (state) {
 			case STATE_GAME_INIT:
 				init_game();
