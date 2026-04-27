@@ -26,7 +26,7 @@ typedef struct
 	volatile uint32_t CR;		// 0x00
 	volatile uint32_t PLLCFGR;	// 0x04
 	volatile uint32_t CFGR;		// 0X08
-	volatile uint32_t  CIR;		// 0X0C
+	volatile uint32_t CIR;		// 0X0C
 	volatile uint32_t AHB1RSTR;	// 0X10
 	volatile uint32_t AHB2RSTR;	// 0X14
 	volatile uint32_t AHB3RSTR;	// 0X18
