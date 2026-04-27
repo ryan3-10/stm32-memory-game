@@ -34,6 +34,13 @@ void turn_off(LIGHT light) {
 	}
 }
 
+void all_lights_off() {
+	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, YELLOW_LIGHT_PIN, 0);
+}
+
 uint8_t is_pressed(BUTTON button) {
 	uint8_t output;
 	switch (button) {

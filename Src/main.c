@@ -29,6 +29,8 @@ int main(void)
 	srand(0);
 	GAME game = get_new_game();
 
+	get_input();
+
 	while(1) {
 		switch (game.state) {
 			case STATE_GAME_INIT:
@@ -47,6 +49,9 @@ int main(void)
 				user_attempt(&game);
 				break;
 			case STATE_GAME_OVER:
+				game_over_animation();
+				display_score(game.round - 1);
+				game = get_new_game();
 				break;
 		}
 	}

@@ -36,6 +36,7 @@ typedef enum {
 
 void turn_on(LIGHT light);
 void turn_off(LIGHT light);
+void all_lights_off();
 uint8_t is_pressed(BUTTON button);
 BUTTON get_input();
 void delay(uint32_t count);

@@ -77,3 +77,31 @@ void user_attempt(GAME* game) {
 	}
 }
 
+void game_over_animation() {
+	const uint8_t flash_count = 15;
+	for (int8_t i = 0; i < flash_count; ++i) {
+		turn_on(LIGHT_RED);
+		delay(100000);
+		turn_off(LIGHT_RED);
+		delay(100000);
+	}
+}
+
+void display_score(uint8_t score) {
+	if (score & (1 << 0)) {
+		turn_on(LIGHT_YELLOW);
+	}
+	if (score & 1 << 1) {
+		turn_on(LIGHT_BLUE);
+	}
+	if (score & 1 << 2) {
+		turn_on(LIGHT_WHITE);
+	}
+	if (score & 1 << 3) {
+		turn_on(LIGHT_RED);
+	}
+
+	get_input();
+	all_lights_off();
+}
+

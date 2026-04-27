@@ -22,5 +22,7 @@ void init_game();
 void wait_to_start();
 void display_sequence(GAME* game);
 void user_attempt(GAME* game);
+void game_over_animation();
+void display_score(uint8_t score);
 
 #endif /* GAME_H_ */
