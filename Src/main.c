@@ -27,16 +27,11 @@
 int main(void)
 {
 	srand(0);
+	init_game(); // sets pins for I/O
 	GAME game = get_new_game();
-
-	get_input();
 
 	while(1) {
 		switch (game.state) {
-			case STATE_GAME_INIT:
-				init_game();
-				game.state = STATE_WAIT_START;
-				break;
 			case STATE_WAIT_START:
 				wait_to_start();
 				game.state = STATE_SEQUENCE;

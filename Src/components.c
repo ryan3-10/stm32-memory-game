@@ -66,15 +66,22 @@ BUTTON get_input() {
 
 	while (pressed == BUTTON_NONE) {
 		if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) pressed = BUTTON_RED;
-		if (!gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN)) pressed = BUTTON_WHITE;
-		if (!gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN)) pressed = BUTTON_BLUE;
-		if (!gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN)) pressed = BUTTON_YELLOW;
+		else if (!gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN)) pressed = BUTTON_WHITE;
+		else if (!gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN)) pressed = BUTTON_BLUE;
+		else if (!gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN)) pressed = BUTTON_YELLOW;
+	}
+
+	delay(500); // debounce check
+
+	if (!is_pressed(pressed)) {
+	        return get_input();
 	}
 
 	turn_on((LIGHT)pressed);
-	delay(300);
+
 	while (is_pressed(pressed));
-	delay(300);
+	delay(500);
+
 	turn_off((LIGHT)pressed);
 
 	return pressed;
