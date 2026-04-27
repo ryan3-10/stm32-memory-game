@@ -15,4 +15,9 @@ void test_debouncing() {
 	}
 }
 
+void test_display_score() {
+	for (int8_t i = 0; i < 16; ++i) {
+		display_score(i);
+	}
+}
 
