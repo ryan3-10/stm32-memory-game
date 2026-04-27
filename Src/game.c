@@ -7,7 +7,7 @@ int8_t sequence[50];
 
 GAME get_new_game() {
 	GAME game = {
-		.state = STATE_GAME_INIT,
+		.state = STATE_WAIT_START,
 		.round = 0,
 	};
 	return game;

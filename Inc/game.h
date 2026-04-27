@@ -4,7 +4,6 @@
 #include <components.h>
 
 typedef enum {
-	STATE_GAME_INIT,
 	STATE_WAIT_START,
 	STATE_SEQUENCE,
 	STATE_USER_ATTEMPT,
