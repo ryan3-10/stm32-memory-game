@@ -19,16 +19,16 @@ void init_game() {
 	RCC->AHB1ENR |= 1 << 4;
 
 	// Set the pins controlling the LEDs to output
-	gpio_init_output(GPIOE, 6); // red
+	gpio_init_output(GPIOE, 6); // green
 	gpio_init_output(GPIOE, 2); // white
 	gpio_init_output(GPIOE, 13); // blue
-	gpio_init_output(GPIOE, 15); // green
+	gpio_init_output(GPIOE, 15); // red
 
 	// Set the pins controlling the buttons to input
-	gpio_init_input(GPIOC, 3); // red
+	gpio_init_input(GPIOC, 3); // green
 	gpio_init_input(GPIOC, 4); // white
 	gpio_init_input(GPIOC, 5); // blue
-	gpio_init_input(GPIOC, 6); // green
+	gpio_init_input(GPIOC, 6); // red
 
 	// Set pull up resistors in pins controlling the buttons
 	gpio_set_pullup(GPIOC, 3);
@@ -39,9 +39,9 @@ void init_game() {
 
 void wait_to_start() {
 	// Wait for the user to press the blue button
-	turn_on(LIGHT_BLUE);
-	while (get_input() != BUTTON_BLUE);
-	turn_off(LIGHT_BLUE);
+	turn_on(LIGHT_GREEN);
+	while (get_input() != BUTTON_GREEN);
+	turn_off(LIGHT_GREEN);
 }
 
 void display_sequence(GAME* game) {
@@ -89,7 +89,7 @@ void game_over_animation() {
 
 void display_score(uint8_t score) {
 	if (score & (1 << 0)) {
-		turn_on(LIGHT_GREEN);
+		turn_on(LIGHT_RED);
 	}
 	if (score & 1 << 1) {
 		turn_on(LIGHT_BLUE);
@@ -98,7 +98,7 @@ void display_score(uint8_t score) {
 		turn_on(LIGHT_WHITE);
 	}
 	if (score & 1 << 3) {
-		turn_on(LIGHT_RED);
+		turn_on(LIGHT_GREEN);
 	}
 
 	get_input();
