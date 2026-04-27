@@ -22,13 +22,13 @@ void init_game() {
 	gpio_init_output(GPIOE, 6); // red
 	gpio_init_output(GPIOE, 2); // white
 	gpio_init_output(GPIOE, 13); // blue
-	gpio_init_output(GPIOE, 15); //yellow
+	gpio_init_output(GPIOE, 15); // green
 
 	// Set the pins controlling the buttons to input
 	gpio_init_input(GPIOC, 3); // red
 	gpio_init_input(GPIOC, 4); // white
 	gpio_init_input(GPIOC, 5); // blue
-	gpio_init_input(GPIOC, 6); // yellow
+	gpio_init_input(GPIOC, 6); // green
 
 	// Set pull up resistors in pins controlling the buttons
 	gpio_set_pullup(GPIOC, 3);
@@ -89,7 +89,7 @@ void game_over_animation() {
 
 void display_score(uint8_t score) {
 	if (score & (1 << 0)) {
-		turn_on(LIGHT_YELLOW);
+		turn_on(LIGHT_GREEN);
 	}
 	if (score & 1 << 1) {
 		turn_on(LIGHT_BLUE);

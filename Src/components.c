@@ -11,8 +11,8 @@ void turn_on(LIGHT light) {
 	case LIGHT_BLUE:
 		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 1);
 		break;
-	case LIGHT_YELLOW:
-		gpio_write(LIGHT_PORT, YELLOW_LIGHT_PIN, 1);
+	case LIGHT_GREEN:
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 1);
 		break;
 	}
 }
@@ -28,8 +28,8 @@ void turn_off(LIGHT light) {
 	case LIGHT_BLUE:
 		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
 		break;
-	case LIGHT_YELLOW:
-		gpio_write(LIGHT_PORT, YELLOW_LIGHT_PIN, 0);
+	case LIGHT_GREEN:
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
 		break;
 	}
 }
@@ -38,7 +38,7 @@ void all_lights_off() {
 	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
 	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
 	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, YELLOW_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
 }
 
 uint8_t is_pressed(BUTTON button) {
@@ -53,8 +53,8 @@ uint8_t is_pressed(BUTTON button) {
 	case BUTTON_BLUE:
 		output = !gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN);
 		break;
-	case BUTTON_YELLOW:
-		output = !gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN);
+	case BUTTON_GREEN:
+		output = !gpio_read(BUTTON_PORT, GREEN_BUTTON_PIN);
 		break;
 	}
 
@@ -68,7 +68,7 @@ BUTTON get_input() {
 		if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) pressed = BUTTON_RED;
 		else if (!gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN)) pressed = BUTTON_WHITE;
 		else if (!gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN)) pressed = BUTTON_BLUE;
-		else if (!gpio_read(BUTTON_PORT, YELLOW_BUTTON_PIN)) pressed = BUTTON_YELLOW;
+		else if (!gpio_read(BUTTON_PORT, GREEN_BUTTON_PIN)) pressed = BUTTON_GREEN;
 	}
 
 	delay(500); // debounce check
