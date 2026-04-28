@@ -8,16 +8,22 @@
 #define BUTTON_PORT	(GPIOC)
 
 // Light pins
-#define	GREEN_LIGHT_PIN 		(0x6u)
+#define	GREEN_LIGHT_PIN 	(0x6u)
 #define	WHITE_LIGHT_PIN 	(0x2u)
 #define BLUE_LIGHT_PIN 		(0xDu)
 #define RED_LIGHT_PIN		(0xFu)
 
 // Button pins
-#define GREEN_BUTTON_PIN		(0x3u)
+#define GREEN_BUTTON_PIN	(0x3u)
 #define WHITE_BUTTON_PIN	(0x4u)
 #define BLUE_BUTTON_PIN 	(0x5u)
-#define RED_BUTTON_PIN	(0x6u)
+#define RED_BUTTON_PIN		(0x6u)
+
+
+// Systick flags
+#define CTRL_ENABLE    (1 << 0)
+#define CTRL_CLKSOURCE (1 << 2)
+#define CTRL_COUNTFLAG (1 << 16)
 
 typedef enum {
 	LIGHT_GREEN,

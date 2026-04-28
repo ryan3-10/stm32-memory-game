@@ -71,7 +71,7 @@ BUTTON get_input() {
 		else if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) pressed = BUTTON_RED;
 	}
 
-	delay(500); // debounce check
+	delay(30); // debounce check
 
 	if (!is_pressed(pressed)) {
 	        return get_input();
@@ -80,16 +80,32 @@ BUTTON get_input() {
 	turn_on((LIGHT)pressed);
 
 	while (is_pressed(pressed));
-	delay(500);
+	delay(30);
 
 	turn_off((LIGHT)pressed);
 
 	return pressed;
 }
 
-void delay(uint32_t count) {
-	for (volatile uint32_t i = 0; i < count; ++i);
+void delay(uint32_t ms) {
+    // 16000 ticks = 1 ms at 16 MHz
+    SYSTICK->LOAD = 16000 - 1;
+
+    // Clear current value register
+    SYSTICK->VAL = 0;
+
+    // Enable SysTick, use processor clock
+    SYSTICK->CTRL = CTRL_ENABLE | CTRL_CLKSOURCE;
+
+    for (uint32_t i = 0; i < ms; i++) {
+        // Wait until COUNTFLAG is set
+        while (!(SYSTICK->CTRL & CTRL_COUNTFLAG));
+    }
+
+    // Disable SysTick
+    SYSTICK->CTRL = 0;
 }
+
 
 
 

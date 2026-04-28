@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#define GPIOC_BASE	(0x40020800UL)
-#define GPIOE_BASE 	(0x40021000UL)
-#define RCC_BASE 	(0x40023800UL)
+#define GPIOC_BASE		(0x40020800UL)
+#define GPIOE_BASE 		(0x40021000UL)
+#define RCC_BASE 		(0x40023800UL)
+#define SYSTICK_BASE	(0xE000E010UL)
 
-typedef struct
-{
+typedef struct {
 	volatile uint32_t MODER;	// 0x00
 	volatile uint32_t OTYPER;	// 0x04
 	volatile uint32_t OSPEEDR;	// 0x08
@@ -21,8 +21,7 @@ typedef struct
 	volatile uint32_t AFRH;		// 0x20
 } GPIO_PORT_t;
 
-typedef struct
-{
+typedef struct {
 	volatile uint32_t CR;		// 0x00
 	volatile uint32_t PLLCFGR;	// 0x04
 	volatile uint32_t CFGR;		// 0X08
@@ -37,9 +36,16 @@ typedef struct
 	volatile uint32_t AHB1ENR;	// 0x30
 } RCC_t;
 
-#define GPIOC 	((GPIO_PORT_t*)GPIOC_BASE)
-#define GPIOE 	((GPIO_PORT_t*)GPIOE_BASE)
-#define RCC		((RCC_t*)RCC_BASE)
+typedef struct {
+	volatile uint32_t CTRL;		// 0x00
+	volatile uint32_t LOAD;		// 0x04
+	volatile uint32_t VAL;		// 0x08
+} SYSTICK_t;
+
+#define GPIOC 	((volatile GPIO_PORT_t*)GPIOC_BASE)
+#define GPIOE 	((volatile GPIO_PORT_t*)GPIOE_BASE)
+#define RCC		((volatile RCC_t*)RCC_BASE)
+#define SYSTICK	((volatile SYSTICK_t*)SYSTICK_BASE)
 
 
 #endif /* REGISTERS_H_ */

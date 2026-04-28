@@ -46,15 +46,15 @@ void wait_to_start() {
 
 void display_sequence(GAME* game) {
 	game->sequence[game->round++] = rand() % 4;
-	delay(600000);
+	delay(400);
 
 	for (uint8_t i = 0; i < game->round; ++i) {
 		LIGHT light = game->sequence[i];
 		turn_on(light);
 
-		delay(600000);
+		delay(300);
 		turn_off(light);
-		delay(300000);
+		delay(300);
 	}
 }
 
@@ -81,9 +81,9 @@ void game_over_animation() {
 	const uint8_t flash_count = 15;
 	for (int8_t i = 0; i < flash_count; ++i) {
 		turn_on(LIGHT_RED);
-		delay(100000);
+		delay(50);
 		turn_off(LIGHT_RED);
-		delay(100000);
+		delay(50);
 	}
 }
 
