@@ -14,7 +14,7 @@ GAME get_new_game() {
 }
 
 void init_game() {
-	// Enable clock for ports C and E
+	// Enable clock for ports C and E, and ADC1
 	RCC->AHB1ENR |= 1 << 2;
 	RCC->AHB1ENR |= 1 << 4;
 
@@ -46,6 +46,7 @@ void wait_to_start() {
 
 void display_sequence(GAME* game) {
 	game->sequence[game->round++] = rand() % 4;
+
 	delay(400);
 
 	for (uint8_t i = 0; i < game->round; ++i) {
