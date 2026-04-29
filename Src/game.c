@@ -68,17 +68,12 @@ void game_over_animation() {
 }
 
 void display_score(uint8_t score) {
-	if (score & (1 << 0)) {
-		turn_on(LIGHT_RED);
-	}
-	if (score & 1 << 1) {
-		turn_on(LIGHT_BLUE);
-	}
-	if (score & 1 << 2) {
-		turn_on(LIGHT_WHITE);
-	}
-	if (score & 1 << 3) {
-		turn_on(LIGHT_GREEN);
+	LIGHT light_order[] = {LIGHT_RED, LIGHT_BLUE, LIGHT_WHITE, LIGHT_GREEN};
+
+	for (uint8_t i = 0; i < 4; ++i) {
+		if (score & 1 << i) {
+			turn_on(light_order[i]);
+		}
 	}
 
 	get_input();
