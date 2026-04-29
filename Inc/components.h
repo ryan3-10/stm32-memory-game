@@ -3,15 +3,6 @@
 
 #include <gpio.h>
 
-// Ports
-#define LIGHT_PORT	(GPIOE)
-#define BUTTON_PORT	(GPIOC)
-
-// Systick flags
-#define CTRL_ENABLE    (1 << 0)
-#define CTRL_CLKSOURCE (1 << 2)
-#define CTRL_COUNTFLAG (1 << 16)
-
 typedef enum {
 	LIGHT_GREEN,
 	LIGHT_WHITE,

@@ -36,6 +36,11 @@
 // RNG control register bits
 #define RNGEN_POS	(2u)
 
+// Systick flags
+#define CTRL_ENABLE    (1 << 0)
+#define CTRL_CLKSOURCE (1 << 2)
+#define CTRL_COUNTFLAG (1 << 16)
+
 typedef struct {
 	volatile uint32_t MODER;	// 0x00
 	volatile uint32_t OTYPER;	// 0x04
@@ -86,6 +91,10 @@ typedef struct {
 #define RCC		((volatile RCC_t*)RCC_BASE)
 #define SYSTICK	((volatile SYSTICK_t*)SYSTICK_BASE)
 #define RNG		((volatile RNG_t*)RNG_BASE)
+
+// Ports
+#define LIGHT_PORT	(GPIOE)
+#define BUTTON_PORT	(GPIOC)
 
 void init_peripherals();
 
