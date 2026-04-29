@@ -25,7 +25,7 @@
 #endif
 
 int main(void) {
-	init_game(); // sets pins for I/O
+	init_peripherals(); // sets pins for I/O
 	GAME game = get_new_game();
 
 	while(1) {

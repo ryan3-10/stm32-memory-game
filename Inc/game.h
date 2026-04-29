@@ -17,7 +17,6 @@ typedef struct {
 } GAME;
 
 GAME get_new_game();
-void init_game();
 void wait_to_start();
 void display_sequence(GAME* game);
 void user_attempt(GAME* game);
