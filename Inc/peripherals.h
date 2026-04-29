@@ -86,15 +86,11 @@ typedef struct {
 	volatile uint32_t DR;	// 0x08
 } RNG_t;
 
-#define GPIOC 	((volatile GPIO_PORT_t*)GPIOC_BASE)
-#define GPIOE 	((volatile GPIO_PORT_t*)GPIOE_BASE)
+#define BUTTON_PORT 	((volatile GPIO_PORT_t*)GPIOC_BASE)
+#define LIGHT_PORT 	((volatile GPIO_PORT_t*)GPIOE_BASE)
 #define RCC		((volatile RCC_t*)RCC_BASE)
 #define SYSTICK	((volatile SYSTICK_t*)SYSTICK_BASE)
 #define RNG		((volatile RNG_t*)RNG_BASE)
-
-// Ports
-#define LIGHT_PORT	(GPIOE)
-#define BUTTON_PORT	(GPIOC)
 
 void init_peripherals();
 
