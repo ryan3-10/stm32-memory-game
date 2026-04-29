@@ -1,44 +1,50 @@
 #include <components.h>
 
 void turn_on(LIGHT light) {
+	const uin8_t on_value = 1;
+
 	switch (light) {
 	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 1);
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, on_value);
 		break;
 	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 1);
+		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, on_value);
 		break;
 	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 1);
+		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, on_value);
 		break;
 	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 1);
+		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, on_value);
 		break;
 	}
 }
 
 void turn_off(LIGHT light) {
+	const off_value = 0;
+
 	switch (light) {
 	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, off_value);
 		break;
 	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
+		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, off_value);
 		break;
 	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
+		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, off_value);
 		break;
 	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
+		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, off_value);
 		break;
 	}
 }
 
 void all_lights_off() {
-	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
+	const off_value = 0;
+
+	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, off_value);
+	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, off_value);
+	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, off_value);
+	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, off_value);
 }
 
 uint8_t is_pressed(BUTTON button) {
@@ -62,6 +68,7 @@ uint8_t is_pressed(BUTTON button) {
 }
 
 BUTTON get_input() {
+	const uint8_t debounce_delay = 30;
 	BUTTON pressed = BUTTON_NONE;
 
 	while (pressed == BUTTON_NONE) {
@@ -71,7 +78,7 @@ BUTTON get_input() {
 		else if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) pressed = BUTTON_RED;
 	}
 
-	delay(30); // debounce check
+	delay(debounce_delay); // debounce check
 
 	if (!is_pressed(pressed)) {
 	        return get_input();
@@ -80,7 +87,7 @@ BUTTON get_input() {
 	turn_on((LIGHT)pressed);
 
 	while (is_pressed(pressed));
-	delay(30);
+	delay(debounce_delay);
 
 	turn_off((LIGHT)pressed);
 
