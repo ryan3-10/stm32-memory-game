@@ -1,7 +1,7 @@
 #include <components.h>
 
 void turn_on(LIGHT light) {
-	const uin8_t on_value = 1;
+	const uint8_t on_value = 1;
 
 	switch (light) {
 	case LIGHT_GREEN:
