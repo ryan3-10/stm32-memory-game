@@ -3,8 +3,6 @@
 #include <gpio.h>
 #include <stdlib.h>
 
-int8_t sequence[50];
-
 GAME get_new_game() {
 	GAME game = {
 		.state = STATE_WAIT_START,
