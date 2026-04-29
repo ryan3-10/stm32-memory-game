@@ -28,27 +28,6 @@ int main(void) {
 	init_game(); // sets pins for I/O
 	GAME game = get_new_game();
 
-	// PLLN = 12
-	RCC->PLLCFGR &= ~(0XFFF << 6);
-	RCC->PLLCFGR |= 12 << 6;
-
-	// PLLM = 2
-	RCC->PLLCFGR &= ~(0XFFF << 0);
-	RCC->PLLCFGR |= 2 << 0;
-
-	// PLLQ = 2
-	RCC->PLLCFGR &= ~(0XFFF << 24);
-	RCC->PLLCFGR |= 2 << 24;
-
-	RCC->AHB2ENR |= 1 << 6;
-	RCC->CR |= 1 << 24;
-
-	RNG->CR |= 1 << 2;
-
-	while (!(RNG->SR & 1));
-	uint32_t seed = RNG->DR;
-	srand(seed);
-
 	while(1) {
 		switch (game.state) {
 			case STATE_WAIT_START:
