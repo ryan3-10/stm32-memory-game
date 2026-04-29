@@ -9,21 +9,21 @@
 void gpio_init_output(GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
-	port->MODER &= ~(0x3u << pos);
+	port->MODER &= ~(3u << pos);
 	port->MODER |= GPIO_MODER_OUTPUT << pos;
 }
 
 void gpio_init_input(GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
-	port->MODER &= ~(0x3u << pos);
+	port->MODER &= ~(3u << pos);
 	port->MODER |= GPIO_MODER_INPUT << pos;
 }
 
 void gpio_set_pullup(GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
-	port->PUPDR &= ~(0x3u << pos);
+	port->PUPDR &= ~(3u << pos);
 	port->PUPDR |= GPIO_PUPDR_PU << pos;
 }
 
