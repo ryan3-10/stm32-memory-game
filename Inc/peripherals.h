@@ -3,11 +3,38 @@
 
 #include <stdint.h>
 
+// Peripheral base addresses
 #define GPIOC_BASE		(0x40020800UL)
 #define GPIOE_BASE 		(0x40021000UL)
 #define RCC_BASE 		(0x40023800UL)
 #define SYSTICK_BASE	(0xE000E010UL)
 #define RNG_BASE		(0x50060800UL)
+
+// Light pins
+#define	GREEN_LIGHT_PIN 	(0x6u)
+#define	WHITE_LIGHT_PIN 	(0x2u)
+#define BLUE_LIGHT_PIN 		(0xDu)
+#define RED_LIGHT_PIN		(0xFu)
+
+// Button pins
+#define GREEN_BUTTON_PIN	(0x3u)
+#define WHITE_BUTTON_PIN	(0x4u)
+#define BLUE_BUTTON_PIN 	(0x5u)
+#define RED_BUTTON_PIN		(0x6u)
+
+// PLL bits
+#define PLLN_POS 	(6u)
+#define PLLM_POS 	(0u)
+#define PLLQ_POS 	(24u)
+#define PLLON_POS	(24u)
+
+// Clock enable bits
+#define PORTC_CLOCK_POS	(2u)
+#define PORTE_CLOCK_POS	(4u)
+#define RNG_CLOCK_POS	(6u)
+
+// RNG control register bits
+#define RNGEN_POS	(2u)
 
 typedef struct {
 	volatile uint32_t MODER;	// 0x00
