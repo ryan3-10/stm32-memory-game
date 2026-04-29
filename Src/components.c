@@ -1,50 +1,44 @@
 #include <components.h>
 
 void turn_on(LIGHT light) {
-	const uint8_t on_value = 1;
-
 	switch (light) {
 	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, on_value);
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 1);
 		break;
 	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, on_value);
+		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 1);
 		break;
 	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, on_value);
+		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 1);
 		break;
 	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, on_value);
+		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 1);
 		break;
 	}
 }
 
 void turn_off(LIGHT light) {
-	const off_value = 0;
-
 	switch (light) {
 	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, off_value);
+		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
 		break;
 	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, off_value);
+		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
 		break;
 	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, off_value);
+		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
 		break;
 	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, off_value);
+		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
 		break;
 	}
 }
 
 void all_lights_off() {
-	const off_value = 0;
-
-	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, off_value);
-	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, off_value);
-	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, off_value);
-	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, off_value);
+	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
+	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
 }
 
 uint8_t is_pressed(BUTTON button) {
