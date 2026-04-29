@@ -19,17 +19,20 @@ void wait_to_start() {
 }
 
 void display_sequence(GAME* game) {
+	const uint32_t initial_delay = 400;
+	const uint32_t mid_delay = 300;
+
 	game->sequence[game->round++] = rand() % 4;
 
-	delay(400);
+	delay(initial_delay);
 
 	for (uint8_t i = 0; i < game->round; ++i) {
 		LIGHT light = game->sequence[i];
 		turn_on(light);
 
-		delay(300);
+		delay(mid_delay);
 		turn_off(light);
-		delay(300);
+		delay(mid_delay);
 	}
 }
 
@@ -54,11 +57,13 @@ void user_attempt(GAME* game) {
 
 void game_over_animation() {
 	const uint8_t flash_count = 15;
+	const uint8_t flash_delay = 50;
+
 	for (int8_t i = 0; i < flash_count; ++i) {
 		turn_on(LIGHT_RED);
-		delay(50);
+		delay(flash_delay);
 		turn_off(LIGHT_RED);
-		delay(50);
+		delay(flash_delay);
 	}
 }
 
