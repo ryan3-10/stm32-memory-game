@@ -7,22 +7,22 @@ void init_peripherals() {
 	RCC->AHB2ENR |= 1 << RNG_CLOCK_POS;
 
 	// Set the pins controlling the LEDs to output
-	gpio_init_output(GPIOE, GREEN_LIGHT_PIN);
-	gpio_init_output(GPIOE, WHITE_LIGHT_PIN);
-	gpio_init_output(GPIOE, BLUE_LIGHT_PIN);
-	gpio_init_output(GPIOE, RED_LIGHT_PIN);
+	gpio_init_output(LIGHT_PORT, GREEN_LIGHT_PIN);
+	gpio_init_output(LIGHT_PORT, WHITE_LIGHT_PIN);
+	gpio_init_output(LIGHT_PORT, BLUE_LIGHT_PIN);
+	gpio_init_output(LIGHT_PORT, RED_LIGHT_PIN);
 
 	// Set the pins controlling the buttons to input
-	gpio_init_input(GPIOC, GREEN_BUTTON_PIN);
-	gpio_init_input(GPIOC, WHITE_BUTTON_PIN);
-	gpio_init_input(GPIOC, BLUE_BUTTON_PIN);
-	gpio_init_input(GPIOC, RED_BUTTON_PIN);
+	gpio_init_input(BUTTON_PORT, GREEN_BUTTON_PIN);
+	gpio_init_input(BUTTON_PORT, WHITE_BUTTON_PIN);
+	gpio_init_input(BUTTON_PORT, BLUE_BUTTON_PIN);
+	gpio_init_input(BUTTON_PORT, RED_BUTTON_PIN);
 
 	// Set pull up resistors in pins controlling the buttons
-	gpio_set_pullup(GPIOC, GREEN_BUTTON_PIN);
-	gpio_set_pullup(GPIOC, WHITE_BUTTON_PIN);
-	gpio_set_pullup(GPIOC, BLUE_BUTTON_PIN);
-	gpio_set_pullup(GPIOC, RED_BUTTON_PIN);
+	gpio_set_pullup(BUTTON_PORT, GREEN_BUTTON_PIN);
+	gpio_set_pullup(BUTTON_PORT, WHITE_BUTTON_PIN);
+	gpio_set_pullup(BUTTON_PORT, BLUE_BUTTON_PIN);
+	gpio_set_pullup(BUTTON_PORT, RED_BUTTON_PIN);
 
 	// PLLN = 12
 	RCC->PLLCFGR &= ~(0X1FF << PLLN_POS);
