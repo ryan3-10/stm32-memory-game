@@ -1,3 +1,4 @@
+#include <board.h> // for pin and port information
 #include <game_io.h>
 
 void turn_on(LIGHT light) {
@@ -86,25 +87,6 @@ BUTTON get_input() {
 	turn_off((LIGHT)pressed);
 
 	return pressed;
-}
-
-void delay(uint32_t ms) {
-    // 16000 ticks = 1 ms at 16 MHz
-    SYSTICK->LOAD = 16000 - 1;
-
-    // Clear current value register
-    SYSTICK->VAL = 0;
-
-    // Enable SysTick, use processor clock
-    SYSTICK->CTRL = CTRL_ENABLE | CTRL_CLKSOURCE;
-
-    for (uint32_t i = 0; i < ms; i++) {
-        // Wait until COUNTFLAG is set
-        while (!(SYSTICK->CTRL & CTRL_COUNTFLAG));
-    }
-
-    // Disable SysTick
-    SYSTICK->CTRL = 0;
 }
 
 

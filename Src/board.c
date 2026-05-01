@@ -1,4 +1,19 @@
+#include <board.h>
 #include <mcu.h>
+
+// PLL bits
+#define PLLN_POS 	(6u)
+#define PLLM_POS 	(0u)
+#define PLLQ_POS 	(24u)
+#define PLLON_POS	(24u)
+
+// Clock enable bits
+#define PORTC_CLOCK_POS	(2u)
+#define PORTE_CLOCK_POS	(4u)
+#define RNG_CLOCK_POS	(6u)
+
+// RNG control register bits
+#define RNGEN_POS	(2u)
 
 void board_init() {
 	// Enable clock for ports C and E, and RNG
