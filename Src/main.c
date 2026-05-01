@@ -18,13 +18,16 @@
 
 #include <board.h>
 #include <game.h>
+#include <system.h>
+//#include <system.h>
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
 int main(void) {
-	board_init(); // sets pins for I/O
+	system_init();	// enables RCC clocks and sets up RNG
+	board_init(); 	// sets pins for I/O and pullup
 	GAME game = get_new_game();
 
 	while(1) {
