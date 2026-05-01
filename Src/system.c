@@ -1,5 +1,6 @@
 #include <mcu.h>
 #include <system.h>
+#include <stdlib.h>
 
 // Clock enable bits
 #define PORTC_CLOCK_POS	(2u)
