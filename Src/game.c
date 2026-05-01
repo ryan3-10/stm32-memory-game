@@ -1,7 +1,7 @@
 #include <game.h>
-#include <game_io.h>	// for button and light I/O
-#include <systick.h>	// for delay
-#include <stdlib.h>		// for rand
+#include <game_io.h>
+#include <systick.h>
+#include <stdlib.h>
 
 GAME get_new_game() {
 	GAME game = {

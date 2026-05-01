@@ -1,7 +1,7 @@
 #ifndef MCU_H_
 #define MCU_H_
 
-#include <stdint.h>	// for uint32_t
+#include <stdint.h>
 
 // Peripheral base addresses
 #define GPIOC_BASE		(0x40020800UL)

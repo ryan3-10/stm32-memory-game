@@ -1,7 +1,7 @@
 #ifndef SYSTICK_H_
 #define SYSTICK_H_
 
-#include <stdint.h>	// for uint32_t
+#include <stdint.h>
 
 void delay(uint32_t count);
 

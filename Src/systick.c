@@ -1,5 +1,5 @@
-#include <stdint.h>	// for uint32_t
-#include <mcu.h>	// for SYSTICK
+#include <stdint.h>
+#include <mcu.h>
 #include <systick.h>
 
 // Systick flags

@@ -1,5 +1,6 @@
-#include <board.h> // for pin and port information
+#include <board.h>
 #include <game_io.h>
+#include <systick.h>
 
 void turn_on(LIGHT light) {
 	switch (light) {
