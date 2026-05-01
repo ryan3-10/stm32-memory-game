@@ -1,5 +1,5 @@
 #include <board.h>
-#include <mcu.h>
+#include <gpio.h>
 
 void board_init() {
 	// Set the pins controlling the LEDs to output
