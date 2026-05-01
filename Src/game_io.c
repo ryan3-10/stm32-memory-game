@@ -58,6 +58,9 @@ uint8_t is_pressed(BUTTON button) {
 	case BUTTON_RED:
 		output = !gpio_read(BUTTON_PORT, RED_BUTTON_PIN);
 		break;
+	// Should never reach here, but I'm getting a warning for not including it
+	case BUTTON_NONE:
+		break;
 	}
 
 	return output;
