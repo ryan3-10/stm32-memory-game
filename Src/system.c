@@ -21,22 +21,22 @@ void system_init() {
 	RCC->AHB1ENR |= 1 << PORTE_CLOCK_POS;
 	RCC->AHB2ENR |= 1 << RNG_CLOCK_POS;
 
-	// PLLN = 12
+	// Set PLLN to 12
 	RCC->PLLCFGR &= ~(0X1FF << PLLN_POS);
 	RCC->PLLCFGR |= 12 << PLLN_POS;
 
-	// PLLM = 2
+	// Set PLLM to 2
 	RCC->PLLCFGR &= ~(0X3F << PLLM_POS);
 	RCC->PLLCFGR |= 2 << PLLM_POS;
 
-	// PLLQ = 2
+	// Set PLLQ to 2
 	RCC->PLLCFGR &= ~(0XF << PLLQ_POS);
 	RCC->PLLCFGR |= 2 << PLLQ_POS;
 
-	// PLLON
+	// Set PLLON bit
 	RCC->CR |= 1 << PLLON_POS;
 
-	// RNGEN
+	// Set RNGEN bit
 	RNG->CR |= 1 << RNGEN_POS;
 
 	// Wait for RNG to have a value ready and then seed srand with it
