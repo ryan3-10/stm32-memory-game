@@ -6,28 +6,28 @@
 #define GPIO_MODER_ANALOG  	(3u)
 #define GPIO_PUPDR_PU		(1u)
 
-void gpio_init_output(GPIO_PORT_t* port, uint8_t pin) {
+void gpio_init_output(volatile GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
 	port->MODER &= ~(3u << pos);
 	port->MODER |= GPIO_MODER_OUTPUT << pos;
 }
 
-void gpio_init_input(GPIO_PORT_t* port, uint8_t pin) {
+void gpio_init_input(volatile GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
 	port->MODER &= ~(3u << pos);
 	port->MODER |= GPIO_MODER_INPUT << pos;
 }
 
-void gpio_set_pullup(GPIO_PORT_t* port, uint8_t pin) {
+void gpio_set_pullup(volatile GPIO_PORT_t* port, uint8_t pin) {
 	const uint8_t pos = pin * 2u;
 
 	port->PUPDR &= ~(3u << pos);
 	port->PUPDR |= GPIO_PUPDR_PU << pos;
 }
 
-void gpio_write(GPIO_PORT_t* port, uint8_t pin, uint8_t value) {
+void gpio_write(volatile GPIO_PORT_t* port, uint8_t pin, uint8_t value) {
 	if (value) {
 		port->ODR |= 1u << pin;
 	} else {
@@ -35,6 +35,6 @@ void gpio_write(GPIO_PORT_t* port, uint8_t pin, uint8_t value) {
 	}
 }
 
-uint8_t gpio_read(GPIO_PORT_t* port, uint8_t pin) {
+uint8_t gpio_read(volatile GPIO_PORT_t* port, uint8_t pin) {
 	return port->IDR & 1u << pin;
 }
