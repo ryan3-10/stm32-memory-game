@@ -1,5 +1,5 @@
-#ifndef PERIPHERALS_H_
-#define PERIPHERALS_H_
+#ifndef MCU_H_
+#define MCU_H_
 
 #include <stdint.h>
 
@@ -92,6 +92,4 @@ typedef struct {
 #define SYSTICK		((volatile SYSTICK_t*)SYSTICK_BASE)
 #define RNG			((volatile RNG_t*)RNG_BASE)
 
-void init_peripherals();
-
-#endif /* PERIPHERALS_H_ */
+#endif /* MCU_H_ */

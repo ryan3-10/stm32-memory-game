@@ -1,6 +1,6 @@
-#include <peripherals.h>
+#include <mcu.h>
 
-void init_peripherals() {
+void board_init() {
 	// Enable clock for ports C and E, and RNG
 	RCC->AHB1ENR |= 1 << PORTC_CLOCK_POS;
 	RCC->AHB1ENR |= 1 << PORTE_CLOCK_POS;

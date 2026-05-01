@@ -1,5 +1,5 @@
-#ifndef COMPONENTS_H_
-#define COMPONENTS_H_
+#ifndef GAME_IO_H_
+#define GAME_IO_H_
 
 #include <gpio.h>
 
@@ -25,4 +25,4 @@ uint8_t is_pressed(BUTTON button);
 BUTTON get_input();
 void delay(uint32_t count);
 
-#endif /* COMPONENTS_H_ */
+#endif /* GAME_IO_H_ */

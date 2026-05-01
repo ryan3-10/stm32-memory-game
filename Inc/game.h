@@ -1,7 +1,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <components.h>
+#include <game_io.h>
+#include <stdint.h>
 
 typedef enum {
 	STATE_WAIT_START,

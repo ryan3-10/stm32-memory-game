@@ -1,5 +1,5 @@
-#include <components.h>
 #include <game.h>
+#include <game_io.h>
 #include <gpio.h>
 #include <stdlib.h>
 

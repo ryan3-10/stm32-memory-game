@@ -1,4 +1,4 @@
-#include <components.h>
+#include <game_io.h>
 
 void turn_on(LIGHT light) {
 	switch (light) {

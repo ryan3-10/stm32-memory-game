@@ -17,6 +17,7 @@
  */
 
 #include <game.h>
+#include <game_io.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -25,7 +26,7 @@
 #endif
 
 int main(void) {
-	init_peripherals(); // sets pins for I/O
+	board_init(); // sets pins for I/O
 	GAME game = get_new_game();
 
 	while(1) {
