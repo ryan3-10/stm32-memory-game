@@ -36,5 +36,5 @@ void gpio_write(volatile GPIO_PORT_t* port, uint8_t pin, uint8_t value) {
 }
 
 uint8_t gpio_read(volatile GPIO_PORT_t* port, uint8_t pin) {
-	return port->IDR & 1u << pin;
+	return (port->IDR >> pin) & 1u;
 }
