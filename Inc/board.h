@@ -8,9 +8,9 @@
 #define RED_LIGHT_PIN		(0xFu)
 
 // Button pins
-#define GREEN_BUTTON_PIN	(0x3u)
-#define WHITE_BUTTON_PIN	(0x4u)
-#define BLUE_BUTTON_PIN 	(0x5u)
+#define GREEN_BUTTON_PIN	(0x5u)
+#define WHITE_BUTTON_PIN	(0x9u)
+#define BLUE_BUTTON_PIN 	(0x7u)
 #define RED_BUTTON_PIN		(0x6u)
 
 #define BUTTON_PORT	GPIOC
