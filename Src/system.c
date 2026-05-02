@@ -46,4 +46,22 @@ void system_init() {
 	srand(seed);
 }
 
+void interrupt_init() {
+	// Enable SYSCFG
+	RCC->APB2ENR |= 1 << 14;
+
+	// Connect EXTI5 to PC5
+	SYSCFG->EXTICR[1] &= ~(0xF << 4);
+	SYSCFG->EXTICR[1] |= 0x2 << 4;
+
+	// Unmask IRQ from EXTI5
+	EXTI->IMR |= 1 << 5;
+
+	// SET falling trigger selection for EXTI5
+	EXTI->FTSR |= 1 << 5;
+
+	// Enable the IRQ for EXTI5 - EXTI9
+	NVIC->ISER[0] |= 1 << 23;
+}
+
 
