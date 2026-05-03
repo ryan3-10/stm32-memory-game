@@ -54,11 +54,29 @@ void interrupt_init() {
 	SYSCFG->EXTICR[1] &= ~(0xF << 4);
 	SYSCFG->EXTICR[1] |= 0x2 << 4;
 
-	// Unmask IRQ from EXTI5
-	EXTI->IMR |= 1 << 5;
+	// Connect EXTI6 to PC6
+	SYSCFG->EXTICR[1] &= ~(0xF << 8);
+	SYSCFG->EXTICR[1] |= 0x2 << 8;
 
-	// SET falling trigger selection for EXTI5
+	// Connect EXTI7 to PC7
+	SYSCFG->EXTICR[1] &= ~(0xF << 12);
+	SYSCFG->EXTICR[1] |= 0x2 << 12;
+
+	// Connect EXTI9 to PC9
+	SYSCFG->EXTICR[2] &= ~(0xF << 4);
+	SYSCFG->EXTICR[2] |= 0x2 << 4;
+
+	// Unmask IRQ from EXTI 5, 6, 7, and 9
+	EXTI->IMR |= 1 << 5;
+	EXTI->IMR |= 1 << 6;
+	EXTI->IMR |= 1 << 7;
+	EXTI->IMR |= 1 << 9;
+
+	// SET falling trigger selection for EXTI 5, 6, 7, and 9
 	EXTI->FTSR |= 1 << 5;
+	EXTI->FTSR |= 1 << 6;
+	EXTI->FTSR |= 1 << 7;
+	EXTI->FTSR |= 1 << 9;
 
 	// Enable the IRQ for EXTI5 - EXTI9
 	NVIC->ISER[0] |= 1 << 23;
