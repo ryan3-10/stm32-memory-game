@@ -71,6 +71,7 @@ uint8_t is_pressed(BUTTON button) {
 }
 
 BUTTON get_input() {
+	pressed = BUTTON_NONE;
 	const uint8_t debounce_delay = 30;
 
 	// wait for interrupt
@@ -84,7 +85,6 @@ BUTTON get_input() {
 
 	turn_off((LIGHT)temp_pressed);
 
-	pressed = BUTTON_NONE;
 	return temp_pressed;
 }
 
