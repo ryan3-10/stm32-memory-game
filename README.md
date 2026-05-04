@@ -13,8 +13,9 @@ This project implements a classic memory/pattern matching game on an ARM Cortex-
 - **🎮 Full Game Mechanics**: Progressive difficulty with up to 15 sequence depth
 - **⚡ Interrupt-Driven Architecture**: Efficient CPU utilization via EXTI handlers (no busy-waiting on button inputs)
 - **🛡️ Debounce Handling**: Hardware-software debouncing on button press/release cycles
-- **🎯 State Machine Design**: Clean game flow with explicit state transitions (WAIT_START → SEQUENCE → USER_ATTEMPT → GAME_OVER)
+- **🎯 State Machine Design**: Clean game flow with explicit state transitions (WAIT_START → SEQUENCE → USER_ATTEMPT → VICTORY/GAME_OVER)
 - **💡 Real-Time Output**: Visual feedback with 4-color LED display
+- **🏆 Victory Animation**: Celebratory light sequence on successful completion of all 15 rounds
 - **📊 Score Display**: Binary encoding of final score across LED states
 
 ## Hardware Configuration
@@ -50,12 +51,19 @@ This project implements a classic memory/pattern matching game on an ARM Cortex-
          ▼
 ┌──────────────────┐
 │  USER_ATTEMPT    │ ◄── Process player button inputs via EXTI
-└────────┬─────────┘
-         │ [Player error OR all correct]
-         ▼
-┌──────────────────┐
-│  GAME_OVER       │ ◄── Flash animation, encode score
-└──────────────────┘
+└────────┬──────┬──────────────────┐
+         │      │                  │
+    [Correct]   │            [15 rounds]
+         │   [Error]            complete
+         │      │                  │
+         ▼      ▼                  ▼
+    SEQUENCE  GAME_OVER        VICTORY
+         │      │                  │
+         └──────┴──────────┬───────┘
+                           │
+                      [Show score/animation]
+                           │
+                      WAIT_START (New Game)
 ```
 
 ### Interrupt-Driven Input Handling
@@ -69,6 +77,18 @@ Instead of blocking on `get_input()`, the game uses a non-blocking approach:
 5. **Button Release**: Verified before advancing sequence matching
 
 This design maintains responsiveness even under tight timing constraints.
+
+### Victory & Defeat Animations
+
+**Victory Animation** (15 rounds completed):
+- Cycles through all 4 lights in sequence (Green → White → Blue → Red)
+- 10 complete cycles at 80ms intervals per light
+- Provides celebratory feedback for successful gameplay
+
+**Defeat Animation** (incorrect button pressed):
+- Red LED flashes 15 times at 50ms intervals
+- Clear, distinct visual indicator of failure
+- Allows smooth transition to score display
 
 ### Key Components
 
@@ -130,8 +150,9 @@ st-flash write Debug/stm32-memory-game.bin 0x08000000
 2. **Watch**: Observe the sequence of flashing lights
 3. **Repeat**: Press buttons in the same sequence
 4. **Progress**: Each successful round adds another light to the sequence
-5. **Game Over**: One mistake ends the game
-6. **Score Display**: Final score encoded in binary LED pattern (max score of 15)
+5. **Victory**: Complete all 15 rounds successfully to trigger the victory animation (cycling through all 4 lights)
+6. **Game Over**: One mistake triggers the defeat animation (red LED flash) and displays your final score
+7. **Score Display**: Final score encoded in binary LED pattern (1-15 for rounds completed)
 
 ## Skills Demonstrated
 
