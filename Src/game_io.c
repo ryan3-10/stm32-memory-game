@@ -6,68 +6,38 @@
 
 volatile BUTTON pressed = BUTTON_NONE;
 
+uint8_t light_pins[] = {
+	GREEN_LIGHT_PIN,
+	WHITE_LIGHT_PIN,
+	BLUE_LIGHT_PIN,
+	RED_LIGHT_PIN
+};
+
+uint8_t button_pins[] = {
+	GREEN_BUTTON_PIN,
+	WHITE_BUTTON_PIN,
+	BLUE_BUTTON_PIN,
+	RED_BUTTON_PIN
+};
+
+const uint8_t array_size = 4;
+
 void turn_on(LIGHT light) {
-	switch (light) {
-	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 1);
-		break;
-	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 1);
-		break;
-	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 1);
-		break;
-	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 1);
-		break;
-	}
+	gpio_write(LIGHT_PORT, light_pins[light], 1);
 }
 
 void turn_off(LIGHT light) {
-	switch (light) {
-	case LIGHT_GREEN:
-		gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
-		break;
-	case LIGHT_WHITE:
-		gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
-		break;
-	case LIGHT_BLUE:
-		gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
-		break;
-	case LIGHT_RED:
-		gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
-		break;
-	}
+	gpio_write(LIGHT_PORT, light_pins[light], 0);
 }
 
 void all_lights_off() {
-	gpio_write(LIGHT_PORT, GREEN_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, WHITE_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, BLUE_LIGHT_PIN, 0);
-	gpio_write(LIGHT_PORT, RED_LIGHT_PIN, 0);
+	for (uint8_t i = 0; i < array_size; ++i) {
+		gpio_write(LIGHT_PORT, light_pins[i], 0);
+	}
 }
 
 uint8_t is_pressed(BUTTON button) {
-	uint8_t output;
-	switch (button) {
-	case BUTTON_GREEN:
-		output = !gpio_read(BUTTON_PORT, GREEN_BUTTON_PIN);
-		break;
-	case BUTTON_WHITE:
-		output = !gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN);
-		break;
-	case BUTTON_BLUE:
-		output = !gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN);
-		break;
-	case BUTTON_RED:
-		output = !gpio_read(BUTTON_PORT, RED_BUTTON_PIN);
-		break;
-	// Should never reach here, but I'm getting a warning for not including it
-	case BUTTON_NONE:
-		break;
-	}
-
-	return output;
+	return !gpio_read(BUTTON_PORT, button_pins[button]);
 }
 
 BUTTON get_input() {
@@ -88,20 +58,15 @@ BUTTON get_input() {
 	return temp_pressed;
 }
 
-// Interrupt handler
+// This interrupt handler loops through button_pins to see which pending bit request is set
+// It then sets pressed according to the pending request
 void EXTI9_5_IRQHandler() {
-	if (EXTI->PR & 1 << GREEN_BUTTON_PIN) {
-		pressed = BUTTON_GREEN;
-		EXTI->PR = 1 << GREEN_BUTTON_PIN;
-	} else if (EXTI->PR & 1 << WHITE_BUTTON_PIN) {
-		pressed = BUTTON_WHITE;
-		EXTI->PR = 1 << WHITE_BUTTON_PIN;
-	} else if (EXTI->PR & 1 << BLUE_BUTTON_PIN) {
-		pressed = BUTTON_BLUE;
-		EXTI->PR = 1 << BLUE_BUTTON_PIN;
-	} else if (EXTI->PR & 1 << RED_BUTTON_PIN) {
-		pressed = BUTTON_RED;
-		EXTI->PR = 1 << RED_BUTTON_PIN;
+	for (uint8_t i = 0; i < array_size; ++i) {
+		if (EXTI->PR & 1 << button_pins[i]) {
+			pressed = (BUTTON)i;
+			EXTI->PR = 1 << button_pins[i];
+			break;
+		}
 	}
 }
 
