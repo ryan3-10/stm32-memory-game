@@ -1,6 +1,8 @@
 #include <board.h>
 #include <gpio.h>
 
+#define IRQ5_9_POS 23
+
 void board_init() {
 	// Set the pins controlling the LEDs to output
 	gpio_init_output(LIGHT_PORT, GREEN_LIGHT_PIN);
@@ -41,15 +43,15 @@ void exti_init() {
 	SYSCFG->EXTICR[green_cr] &= ~(0xF << green_shift);
 	SYSCFG->EXTICR[green_cr] |= 0x2 << green_shift;
 
-	// Connect EXTI6 to PC6
+	// Connect EXTI6 to red button pin
 	SYSCFG->EXTICR[red_cr] &= ~(0xF << red_shift);
 	SYSCFG->EXTICR[red_cr] |= 0x2 << red_shift;
 
-	// Connect EXTI7 to PC7
+	// Connect EXTI7 to blue button pin
 	SYSCFG->EXTICR[blue_cr] &= ~(0xF << blue_shift);
 	SYSCFG->EXTICR[blue_cr] |= 0x2 << blue_shift;
 
-	// Connect EXTI9 to PC9
+	// Connect EXTI9 to white button pin
 	SYSCFG->EXTICR[white_cr] &= ~(0xF << white_shift);
 	SYSCFG->EXTICR[white_cr] |= 0x2 << white_shift;
 
@@ -66,5 +68,5 @@ void exti_init() {
 	EXTI->FTSR |= 1 << RED_BUTTON_PIN;
 
 	// Enable the IRQ for EXTI5 - EXTI9
-	NVIC->ISER[0] |= 1 << 23;
+	NVIC->ISER[0] |= 1 << IRQ5_9_POS;
 }
