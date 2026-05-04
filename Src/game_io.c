@@ -2,6 +2,8 @@
 #include <game_io.h>
 #include <systick.h>
 
+BUTTON pressed;
+
 void turn_on(LIGHT light) {
 	switch (light) {
 	case LIGHT_GREEN:
@@ -91,6 +93,23 @@ BUTTON get_input() {
 	turn_off((LIGHT)pressed);
 
 	return pressed;
+}
+
+// Interrupt handler
+void EXTI9_5_IRQHandler() {
+	if (EXTI->PR & 1 << GREEN_BUTTON_PIN) {
+		pressed = BUTTON_GREEN;
+		EXTI->PR = 1 << GREEN_BUTTON_PIN;
+	} else if (EXTI->PR & 1 << WHITE_BUTTON_PIN) {
+		pressed = BUTTON_WHITE;
+		EXTI->PR = 1 << WHITE_BUTTON_PIN;
+	} else if (EXTI->PR & 1 << BLUE_BUTTON_PIN) {
+		pressed = BUTTON_BLUE;
+		EXTI->PR = 1 << BLUE_BUTTON_PIN;
+	} else if (EXTI->PR & 1 << RED_BUTTON_PIN) {
+		pressed = BUTTON_RED;
+		EXTI->PR = 1 << RED_BUTTON_PIN;
+	}
 }
 
 

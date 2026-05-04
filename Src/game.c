@@ -80,11 +80,3 @@ void display_score(uint8_t score) {
 	all_lights_off();
 }
 
-// Interrupt handler
-void EXTI9_5_IRQHandler() {
-	EXTI->PR = 1 << 5u;
-	EXTI->PR = 1 << 9u;
-	EXTI->PR = 1 << 7u;
-	EXTI->PR = 1 << 6u;
-}
-
