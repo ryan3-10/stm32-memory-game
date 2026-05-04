@@ -1,7 +1,7 @@
 #ifndef GAME_IO_H_
 #define GAME_IO_H_
 
-#include <gpio.h>
+#include <stdint.h>
 
 typedef enum {
 	LIGHT_GREEN,
