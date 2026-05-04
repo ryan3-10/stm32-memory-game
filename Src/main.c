@@ -46,6 +46,10 @@ int main(void) {
 				display_score(game.round - 1);
 				game = get_new_game();
 				break;
+			case STATE_VICTORY:
+				victory_animation();
+				display_score(game.round - 1);
+				game = get_new_game();
 		}
 	}
 }

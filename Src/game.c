@@ -6,7 +6,7 @@
 GAME get_new_game() {
 	GAME game = {
 		.state = STATE_WAIT_START,
-		.round = 0,
+		.round = 1,
 	};
 	return game;
 }
@@ -22,7 +22,7 @@ void display_sequence(GAME* game) {
 	const uint32_t initial_delay = 400;
 	const uint32_t mid_delay = 300;
 
-	game->sequence[game->round++] = rand() % 4;
+	game->sequence[game->round - 1] = rand() % 4;
 
 	delay(initial_delay);
 
@@ -47,7 +47,7 @@ void user_attempt(GAME* game) {
 	}
 
 	if (game->state != STATE_GAME_OVER) {
-		game->state = STATE_SEQUENCE;
+		game->state = ++game->round == 16 ? STATE_VICTORY : STATE_SEQUENCE;
 	}
 }
 
@@ -60,6 +60,28 @@ void game_over_animation() {
 		delay(flash_delay);
 		turn_off(LIGHT_RED);
 		delay(flash_delay);
+	}
+}
+
+void victory_animation() {
+	const uint8_t flash_delay = 80;
+
+	for (size_t i = 0; i < 10; ++i) {
+		turn_on(LIGHT_GREEN);
+		delay(flash_delay);
+		turn_off(LIGHT_GREEN);
+
+		turn_on(LIGHT_WHITE);
+		delay(flash_delay);
+		turn_off(LIGHT_WHITE);
+
+		turn_on(LIGHT_BLUE);
+		delay(flash_delay);
+		turn_off(LIGHT_BLUE);
+
+		turn_on(LIGHT_RED);
+		delay(flash_delay);
+		turn_off(LIGHT_RED);
 	}
 }
 
