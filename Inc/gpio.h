@@ -2,7 +2,7 @@
 #define GPIO_H_
 
 #include <mcu.h>
-#include <stdlib.h>
+#include <stdint.h>
 
 void gpio_init_output(volatile GPIO_PORT_t* port, uint8_t pin);
 void gpio_init_input(volatile GPIO_PORT_t* port, uint8_t pin);
