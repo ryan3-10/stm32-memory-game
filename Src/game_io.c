@@ -1,8 +1,10 @@
 #include <board.h>
 #include <game_io.h>
+#include <gpio.h>
 #include <systick.h>
+#include <stdint.h>
 
-BUTTON pressed;
+volatile BUTTON pressed = BUTTON_NONE;
 
 void turn_on(LIGHT light) {
 	switch (light) {
@@ -70,29 +72,20 @@ uint8_t is_pressed(BUTTON button) {
 
 BUTTON get_input() {
 	const uint8_t debounce_delay = 30;
-	BUTTON pressed = BUTTON_NONE;
 
-	while (pressed == BUTTON_NONE) {
-		if (!gpio_read(BUTTON_PORT, GREEN_BUTTON_PIN)) pressed = BUTTON_GREEN;
-		else if (!gpio_read(BUTTON_PORT, WHITE_BUTTON_PIN)) pressed = BUTTON_WHITE;
-		else if (!gpio_read(BUTTON_PORT, BLUE_BUTTON_PIN)) pressed = BUTTON_BLUE;
-		else if (!gpio_read(BUTTON_PORT, RED_BUTTON_PIN)) pressed = BUTTON_RED;
-	}
-
+	// wait for interrupt
+	while (pressed == BUTTON_NONE);
+	BUTTON temp_pressed = pressed;
 	delay(debounce_delay); // debounce check
 
-	if (!is_pressed(pressed)) {
-	        return get_input();
-	}
-
-	turn_on((LIGHT)pressed);
-
-	while (is_pressed(pressed));
+	turn_on((LIGHT)temp_pressed);
+	while (is_pressed(temp_pressed));
 	delay(debounce_delay);
 
-	turn_off((LIGHT)pressed);
+	turn_off((LIGHT)temp_pressed);
 
-	return pressed;
+	pressed = BUTTON_NONE;
+	return temp_pressed;
 }
 
 // Interrupt handler
