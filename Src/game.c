@@ -41,10 +41,6 @@ void user_attempt(GAME* game) {
 		BUTTON expected = game->sequence[i];
 		BUTTON pressed = get_input();
 
-		turn_on((LIGHT)pressed);
-		while (is_pressed(pressed));
-		turn_off((LIGHT)pressed);
-
 		if (expected != pressed) {
 			game->state = STATE_GAME_OVER;
 		}
