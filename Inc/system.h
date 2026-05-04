@@ -2,6 +2,5 @@
 #define SYSTEM_H_
 
 void system_init();
-void interrupt_init();
 
 #endif /* SYSTEM_H_ */

@@ -17,6 +17,6 @@
 #define LIGHT_PORT 	GPIOE
 
 void board_init();
-
+void interrupt_init();
 
 #endif /* BOARD_H_ */
