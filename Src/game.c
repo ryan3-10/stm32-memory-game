@@ -37,6 +37,26 @@ void display_sequence(GAME* game) {
 }
 
 void user_attempt(GAME* game) {
+	uint8_t index = 0;
+	BUTTON pressed;
+	uint32_t start_time = get_ms_ticks();
+
+	while (game->state == STATE_USER_ATTEMPT) {
+		pressed = get_input();
+
+		if ((LIGHT)pressed == game->sequence[index]) {
+			if (++index == game->round) {
+				game->state = ++game->round == 16
+					? STATE_VICTORY
+					: STATE_SEQUENCE;
+			}
+		} else if (pressed != BUTTON_NONE) {
+			game->state = STATE_GAME_OVER;
+		} else if (get_ms_ticks() - start_time > 1000 * game->round) {
+			game->state = STATE_GAME_OVER;
+		}
+	}
+
 	for (uint8_t i = 0; i < game->round && game->state != STATE_GAME_OVER; ++i) {
 		BUTTON expected = game->sequence[i];
 		BUTTON pressed = get_input();

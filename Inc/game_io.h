@@ -18,6 +18,13 @@ typedef enum {
 	BUTTON_RED
 } BUTTON;
 
+typedef enum {
+    INPUT_IDLE,
+    INPUT_DEBOUNCE_PRESS,
+    INPUT_WAIT_RELEASE,
+    INPUT_DEBOUNCE_RELEASE
+} INPUT_STATE;
+
 void turn_on(LIGHT light);
 void turn_off(LIGHT light);
 void all_lights_off();

@@ -41,21 +41,41 @@ uint8_t is_pressed(BUTTON button) {
 }
 
 BUTTON get_input() {
-	pressed = BUTTON_NONE;
-	const uint8_t debounce_delay = 30;
+	const uint8_t debounce_ticks = 30;
+	static BUTTON current = BUTTON_NONE;
+	static INPUT_STATE state = INPUT_IDLE;
+	static uint32_t press_time;
+	static uint32_t release_time;
 
-	// wait for interrupt
-	while (pressed == BUTTON_NONE);
-	BUTTON temp_pressed = pressed;
-	delay(debounce_delay); // debounce check
-
-	turn_on((LIGHT)temp_pressed);
-	while (is_pressed(temp_pressed));
-	delay(debounce_delay);
-
-	turn_off((LIGHT)temp_pressed);
-
-	return temp_pressed;
+	switch (state) {
+		case INPUT_IDLE:
+			if (pressed != BUTTON_NONE) {
+				current = pressed;
+				pressed = BUTTON_NONE;
+				press_time = get_ms_ticks();
+				state = INPUT_DEBOUNCE_PRESS;
+			}
+			break;
+		case INPUT_DEBOUNCE_PRESS:
+			if (get_ms_ticks() - press_time >= debounce_ticks) {
+				turn_on((LIGHT)current);
+				state = INPUT_WAIT_RELEASE;
+			}
+			break;
+		case INPUT_WAIT_RELEASE:
+			if (!is_pressed(current)) {
+				release_time = get_ms_ticks();
+				state = INPUT_DEBOUNCE_RELEASE;
+			}
+			break;
+		case INPUT_DEBOUNCE_RELEASE:
+			if (get_ms_ticks() - release_time >= debounce_ticks) {
+				turn_off((LIGHT)current);
+				state = INPUT_IDLE;
+				return current;
+			}
+	}
+		return BUTTON_NONE;
 }
 
 // This interrupt handler loops through button_pins to see which pending bit request is set
