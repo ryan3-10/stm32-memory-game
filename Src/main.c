@@ -27,6 +27,7 @@ int main(void) {
 	system_init();	// enables RCC clocks and sets up RNG
 	board_init(); 	// sets pins for I/O and pull up, and exti config
 	GAME game = get_new_game();
+
 	while(1) {
 		switch (game.state) {
 			case STATE_WAIT_START:
