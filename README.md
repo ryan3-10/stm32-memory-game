@@ -1,16 +1,16 @@
 # STM32 Memory Game
 
-A high-performance implementation of Simon Says on the **STM32F407** microcontroller, demonstrating advanced embedded systems design patterns including interrupt-driven input handling, finite state machines, and bare-metal peripheral configuration.
+A high-performance implementation of Simon Says on the **STM32F407** microcontroller, demonstrating embedded systems design patterns including interrupt-driven input handling, finite state machines, and bare-metal peripheral configuration.
 
 ## Overview
 
 This project implements a classic memory/pattern matching game on an ARM Cortex-M4 microcontroller with minimal overhead. The game presents increasingly complex sequences of colored lights, requiring the player to reproduce each sequence by pressing corresponding buttons. Success advances to the next round; any mistake ends the game.
 
-**Key Distinction**: Unlike naive polling-based approaches, this implementation uses **external interrupts (EXTI)** for button inputs combined with a non-blocking state machine, allowing the processor to efficiently handle real-time constraints while maintaining responsive gameplay.
+**Key Distinction**: Rather than a naive polling-based approach, this implementation uses **external interrupts (EXTI)** for button inputs combined with a non-blocking state machine, allowing the processor to efficiently handle real-time constraints while maintaining responsive gameplay.
 
 ## Features
 
-- **🎮 Full Game Mechanics**: Progressive difficulty with up to 50 sequence depth
+- **🎮 Full Game Mechanics**: Progressive difficulty with up to 15 sequence depth
 - **⚡ Interrupt-Driven Architecture**: Efficient CPU utilization via EXTI handlers (no busy-waiting on button inputs)
 - **🛡️ Debounce Handling**: Hardware-software debouncing on button press/release cycles
 - **🎯 State Machine Design**: Clean game flow with explicit state transitions (WAIT_START → SEQUENCE → USER_ATTEMPT → GAME_OVER)
@@ -21,9 +21,9 @@ This project implements a classic memory/pattern matching game on an ARM Cortex-
 
 | Component | Details |
 |-----------|---------|
-| **MCU** | STM32F407VGTx (Cortex-M4, 168 MHz, 1MB Flash) |
+| **MCU** | STM32F407G-DISC1 (Cortex-M4, 168 MHz, 1MB Flash) |
 | **GPIO** | 4 Output pins (GPIOE) for LEDs, 4 Input pins (GPIOC) for buttons |
-| **Interrupts** | EXTI3, EXTI4, EXTI9_5_IRQn handlers for button events |
+| **Interrupts** | EXTI9_5_IRQn handler for all button events (EXTI5, EXTI6, EXTI7, EXTI9) |
 | **RNG** | Hardware random number generator for sequence generation |
 | **SysTick** | Timer for game delays and debounce timing |
 
@@ -64,8 +64,8 @@ Instead of blocking on `get_input()`, the game uses a non-blocking approach:
 
 1. **Button Press**: EXTI handler detects falling edge (active-low buttons)
 2. **Debounce**: 20ms software delay ensures stable pin state
-3. **State Update**: Global `button_pressed` variable updated
-4. **Main Loop**: Checks for available button press without blocking
+3. **State Update**: Global `button_pressed` variable is updated
+4. **get_input()**: Checks if the value of the `pressed` variable has been updated by the IRQ
 5. **Button Release**: Verified before advancing sequence matching
 
 This design maintains responsiveness even under tight timing constraints.
@@ -74,12 +74,13 @@ This design maintains responsiveness even under tight timing constraints.
 
 | File | Responsibility |
 |------|-----------------|
-| `game.c` | Game logic, state machine, sequence generation |
+| `game.c` | Game logic, sequence generation, compare user input with expected sequence |
 | `game_io.c` | LED control and non-blocking button input |
 | `board.c` | GPIO initialization, EXTI configuration |
 | `gpio.c` | Low-level GPIO register manipulation |
 | `system.c` | RCC clocks, RNG initialization |
 | `systick.c` | Timer for delays and debouncing |
+| `mcu.h` | Raw memory locations of peripheral registers | 
 
 ## Technical Highlights
 
@@ -99,7 +100,7 @@ This design maintains responsiveness even under tight timing constraints.
 - Modular design allows easy hardware adaptation
 
 ### 4. **Memory-Efficient Sequence Storage**
-- Fixed-size array (50 elements) eliminates dynamic allocation
+- Fixed-size array (15 elements) eliminates dynamic allocation
 - Tight loops with minimal stack usage suitable for embedded constraints
 
 ## Building & Running
@@ -130,7 +131,7 @@ st-flash write Debug/stm32-memory-game.bin 0x08000000
 3. **Repeat**: Press buttons in the same sequence
 4. **Progress**: Each successful round adds another light to the sequence
 5. **Game Over**: One mistake ends the game
-6. **Score Display**: Final score encoded in binary LED pattern (up to 15 rounds)
+6. **Score Display**: Final score encoded in binary LED pattern (max score of 15)
 
 ## Skills Demonstrated
 
@@ -140,20 +141,8 @@ st-flash write Debug/stm32-memory-game.bin 0x08000000
 - **Low-Level Programming**: Register manipulation, bit-field operations, memory efficiency
 - **Hardware Debugging**: EXTI configuration validation, timing analysis
 
-## Future Enhancements
-
-- Sound feedback via PWM-controlled buzzer
-- Escalating difficulty (faster playback speeds per round)
-- High score storage in EEPROM
-- Display output (7-segment or LCD) for score/round indication
-- Power consumption optimization with sleep modes
-
-## License
-
-Licensed under the STM32 License Agreement. See LICENSE file for details.
-
 ---
 
 **Author**: Ryan  
-**MCU**: STM32F407VGTx  
+**MCU**: STM32F407G-DISC1  
 **Date**: 2026
