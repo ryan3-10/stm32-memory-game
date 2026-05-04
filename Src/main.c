@@ -28,7 +28,6 @@ int main(void) {
 	system_init();	// enables RCC clocks and sets up RNG
 	board_init(); 	// sets pins for I/O and pull up
 	GAME game = get_new_game();
-	interrupt_init();
 
 	while(1) {
 		switch (game.state) {

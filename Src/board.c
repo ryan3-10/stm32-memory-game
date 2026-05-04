@@ -19,30 +19,39 @@ void board_init() {
 	gpio_set_pullup(BUTTON_PORT, WHITE_BUTTON_PIN);
 	gpio_set_pullup(BUTTON_PORT, BLUE_BUTTON_PIN);
 	gpio_set_pullup(BUTTON_PORT, RED_BUTTON_PIN);
+
+	exti_init();
 }
 
-void interrupt_init() {
-	const uint8_t extis_per_register = 4;
-	const uint8_t green_cr = GREEN_BUTTON_PIN / extis_per_register;
-	const uint8_t white_cr = WHITE_BUTTON_PIN / extis_per_register;
-	const uint8_t blue_cr = BLUE_BUTTON_PIN / extis_per_register;
-	const uint8_t red_cr = RED_BUTTON_PIN / extis_per_register;
+void exti_init() {
+	const uint8_t extis_per_register 	= 4;
+	const uint8_t bits_per_exti			= 4;
+
+	const uint8_t green_cr	= GREEN_BUTTON_PIN / extis_per_register;
+	const uint8_t red_cr 	= RED_BUTTON_PIN / extis_per_register;
+	const uint8_t blue_cr 	= BLUE_BUTTON_PIN / extis_per_register;
+	const uint8_t white_cr 	= WHITE_BUTTON_PIN / extis_per_register;
+
+	const uint8_t green_shift	= (GREEN_BUTTON_PIN % extis_per_register) * bits_per_exti;
+	const uint8_t red_shift 	= (RED_BUTTON_PIN % extis_per_register) * bits_per_exti;
+	const uint8_t blue_shift	= (BLUE_BUTTON_PIN % extis_per_register) * bits_per_exti;
+	const uint8_t white_shift	= (WHITE_BUTTON_PIN % extis_per_register) * bits_per_exti;
 
 	// Connect EXTI5 to green button pin
-	SYSCFG->EXTICR[green_cr] &= ~(0xF << 4);
-	SYSCFG->EXTICR[green_cr] |= 0x2 << 4;
+	SYSCFG->EXTICR[green_cr] &= ~(0xF << green_shift);
+	SYSCFG->EXTICR[green_cr] |= 0x2 << green_shift;
 
 	// Connect EXTI6 to PC6
-	SYSCFG->EXTICR[red_cr] &= ~(0xF << 8);
-	SYSCFG->EXTICR[red_cr] |= 0x2 << 8;
+	SYSCFG->EXTICR[red_cr] &= ~(0xF << red_shift);
+	SYSCFG->EXTICR[red_cr] |= 0x2 << red_shift;
 
 	// Connect EXTI7 to PC7
-	SYSCFG->EXTICR[blue_cr] &= ~(0xF << 12);
-	SYSCFG->EXTICR[blue_cr] |= 0x2 << 12;
+	SYSCFG->EXTICR[blue_cr] &= ~(0xF << blue_shift);
+	SYSCFG->EXTICR[blue_cr] |= 0x2 << blue_shift;
 
 	// Connect EXTI9 to PC9
-	SYSCFG->EXTICR[white_cr] &= ~(0xF << 4);
-	SYSCFG->EXTICR[white_cr] |= 0x2 << 4;
+	SYSCFG->EXTICR[white_cr] &= ~(0xF << white_shift);
+	SYSCFG->EXTICR[white_cr] |= 0x2 << white_shift;
 
 	// Unmask IRQ for each EXTI associated with a button's pin
 	EXTI->IMR |= 1 << GREEN_BUTTON_PIN;
