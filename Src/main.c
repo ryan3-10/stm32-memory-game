@@ -33,23 +33,23 @@ int main(void) {
 
 	while(1) {
 		switch (game.state) {
-			case STATE_WAIT_START:
+			case GAME_WAIT_START:
 				wait_to_start();
-				game.state = STATE_SEQUENCE;
+				game.state = GAME_SEQUENCE;
 				break;
-			case STATE_SEQUENCE:
+			case GAME_SEQUENCE:
 				display_sequence(&game);
-				game.state = STATE_USER_ATTEMPT;
+				game.state = GAME_USER_ATTEMPT;
 				break;
-			case STATE_USER_ATTEMPT:
+			case GAME_USER_ATTEMPT:
 				user_attempt(&game);
 				break;
-			case STATE_GAME_OVER:
+			case GAME_OVER:
 				game_over_animation();
 				display_score(game.round - 1);
 				game = get_new_game();
 				break;
-			case STATE_VICTORY:
+			case GAME_VICTORY:
 				victory_animation();
 				display_score(game.round - 1);
 				game = get_new_game();

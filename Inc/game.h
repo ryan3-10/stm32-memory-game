@@ -5,15 +5,15 @@
 #include <stdint.h>
 
 typedef enum {
-	STATE_WAIT_START,
-	STATE_SEQUENCE,
-	STATE_USER_ATTEMPT,
-	STATE_VICTORY,
-	STATE_GAME_OVER
-} STATE;
+	GAME_WAIT_START,
+	GAME_SEQUENCE,
+	GAME_USER_ATTEMPT,
+	GAME_VICTORY,
+	GAME_OVER
+} GAME_STATE;
 
 typedef struct {
-	STATE state;
+	GAME_STATE state;
 	uint32_t round;
 	LIGHT sequence[15];
 } GAME;

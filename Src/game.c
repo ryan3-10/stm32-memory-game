@@ -5,7 +5,7 @@
 
 GAME get_new_game() {
 	GAME game = {
-		.state = STATE_WAIT_START,
+		.state = GAME_WAIT_START,
 		.round = 1,
 	};
 	return game;
@@ -41,33 +41,33 @@ void user_attempt(GAME* game) {
 	BUTTON pressed;
 	uint32_t start_time = get_ms_ticks();
 
-	while (game->state == STATE_USER_ATTEMPT) {
+	while (game->state == GAME_USER_ATTEMPT) {
 		pressed = get_input();
 
 		if ((LIGHT)pressed == game->sequence[index]) {
 			if (++index == game->round) {
 				game->state = ++game->round == 16
-					? STATE_VICTORY
-					: STATE_SEQUENCE;
+					? GAME_VICTORY
+					: GAME_SEQUENCE;
 			}
 		} else if (pressed != BUTTON_NONE) {
-			game->state = STATE_GAME_OVER;
+			game->state = GAME_OVER;
 		} else if (get_ms_ticks() - start_time > 1000 * game->round) {
-			game->state = STATE_GAME_OVER;
+			game->state = GAME_OVER;
 		}
 	}
 
-	for (uint8_t i = 0; i < game->round && game->state != STATE_GAME_OVER; ++i) {
+	for (uint8_t i = 0; i < game->round && game->state != GAME_OVER; ++i) {
 		BUTTON expected = game->sequence[i];
 		BUTTON pressed = get_input();
 
 		if (expected != pressed) {
-			game->state = STATE_GAME_OVER;
+			game->state = GAME_OVER;
 		}
 	}
 
-	if (game->state != STATE_GAME_OVER) {
-		game->state = ++game->round == 16 ? STATE_VICTORY : STATE_SEQUENCE;
+	if (game->state != GAME_OVER) {
+		game->state = ++game->round == 16 ? GAME_VICTORY : GAME_SEQUENCE;
 	}
 }
 
