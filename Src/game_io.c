@@ -72,6 +72,7 @@ BUTTON get_input() {
 				return current;
 			}
 	}
+		pressed = BUTTON_NONE;
 		return BUTTON_NONE;
 }
 

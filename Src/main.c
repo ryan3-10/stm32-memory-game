@@ -39,7 +39,6 @@ int main(void) {
 				break;
 			case GAME_SEQUENCE:
 				display_sequence(&game);
-				game.state = GAME_USER_ATTEMPT;
 				break;
 			case GAME_USER_ATTEMPT:
 				user_attempt(&game);

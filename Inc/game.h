@@ -12,11 +12,18 @@ typedef enum {
 	GAME_OVER
 } GAME_STATE;
 
+typedef enum {
+	ANIMATION_START,
+	ANIMATION_LIGHT_ON,
+	ANIMATION_LIGHT_OFF,
+} ANIMATION_STATE;
+
 typedef struct {
 	GAME_STATE state;
 	uint32_t round;
 	LIGHT sequence[15];
 } GAME;
+
 
 GAME get_new_game();
 void wait_to_start();

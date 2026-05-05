@@ -19,20 +19,36 @@ void wait_to_start() {
 }
 
 void display_sequence(GAME* game) {
-	const uint32_t initial_delay = 400;
-	const uint32_t mid_delay = 300;
+	const uint32_t wait_time = 300;
 
-	game->sequence[game->round - 1] = rand() % 4;
+	static uint32_t time_stamp;
+	static uint8_t index;
+	static ANIMATION_STATE state = ANIMATION_START;
 
-	delay(initial_delay);
+	switch (state) {
+		case (ANIMATION_START):
+			game->sequence[game->round - 1] = rand() % 4;
+			time_stamp = get_ms_ticks();
+			index = 0;
+			state = ANIMATION_LIGHT_ON;
+			break;
+		case (ANIMATION_LIGHT_ON):
+			if (get_ms_ticks() - time_stamp >= wait_time) {
+				turn_on(game->sequence[index]);
+				time_stamp = get_ms_ticks();
+				state = ANIMATION_LIGHT_OFF;
+			} break;
+		case (ANIMATION_LIGHT_OFF):
+			if (get_ms_ticks() - time_stamp >= wait_time) {
+				turn_off(game->sequence[index]);
+				time_stamp = get_ms_ticks();
+				state = ANIMATION_LIGHT_ON;
 
-	for (uint8_t i = 0; i < game->round; ++i) {
-		LIGHT light = game->sequence[i];
-		turn_on(light);
-
-		delay(mid_delay);
-		turn_off(light);
-		delay(mid_delay);
+				if (++index == game->round) {
+					state = ANIMATION_START;
+					game->state = GAME_USER_ATTEMPT;
+				}
+			} break;
 	}
 }
 
@@ -46,7 +62,7 @@ void user_attempt(GAME* game) {
 
 		if ((LIGHT)pressed == game->sequence[index]) {
 			if (++index == game->round) {
-				game->state = ++game->round == 16
+				game->state = ++(game->round) == 16
 					? GAME_VICTORY
 					: GAME_SEQUENCE;
 			}
@@ -55,19 +71,6 @@ void user_attempt(GAME* game) {
 		} else if (get_ms_ticks() - start_time > 1000 * game->round) {
 			game->state = GAME_OVER;
 		}
-	}
-
-	for (uint8_t i = 0; i < game->round && game->state != GAME_OVER; ++i) {
-		BUTTON expected = game->sequence[i];
-		BUTTON pressed = get_input();
-
-		if (expected != pressed) {
-			game->state = GAME_OVER;
-		}
-	}
-
-	if (game->state != GAME_OVER) {
-		game->state = ++game->round == 16 ? GAME_VICTORY : GAME_SEQUENCE;
 	}
 }
 
@@ -114,7 +117,7 @@ void display_score(uint8_t score) {
 		}
 	}
 
-	get_input();
+	while (get_input() == BUTTON_NONE);
 	all_lights_off();
 }
 
