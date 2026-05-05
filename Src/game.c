@@ -19,37 +19,16 @@ void wait_to_start() {
 }
 
 void display_sequence(GAME* game) {
-	const uint32_t wait_time = 300;
+	static uint32_t last_call_time = 0;
 
-	static uint32_t time_stamp;
-	static uint8_t index;
-	static ANIMATION_STATE state = ANIMATION_START;
-
-	switch (state) {
-		case (ANIMATION_START):
-			game->sequence[game->round - 1] = rand() % 4;
-			time_stamp = get_ms_ticks();
-			index = 0;
-			state = ANIMATION_LIGHT_ON;
-			break;
-		case (ANIMATION_LIGHT_ON):
-			if (get_ms_ticks() - time_stamp >= wait_time) {
-				turn_on(game->sequence[index]);
-				time_stamp = get_ms_ticks();
-				state = ANIMATION_LIGHT_OFF;
-			} break;
-		case (ANIMATION_LIGHT_OFF):
-			if (get_ms_ticks() - time_stamp >= wait_time) {
-				turn_off(game->sequence[index]);
-				time_stamp = get_ms_ticks();
-				state = ANIMATION_LIGHT_ON;
-
-				if (++index == game->round) {
-					state = ANIMATION_START;
-					game->state = GAME_USER_ATTEMPT;
-				}
-			} break;
+	if (get_ms_ticks() - last_call_time > 1) {
+		game->sequence[game->round - 1] = rand() % 4;
 	}
+
+	last_call_time = get_ms_ticks();
+
+	const uint32_t wait_time = 300;
+	light_animation(game, game->sequence, game->round, game->round, wait_time, GAME_USER_ATTEMPT);
 }
 
 void user_attempt(GAME* game) {
@@ -125,12 +104,20 @@ void light_animation(
 
 void game_over_animation(GAME* game) {
 	LIGHT lights[] = {LIGHT_RED};
-	light_animation(game, lights, 1, 15, 50, GAME_DISPLAY_SCORE);
+	const uint8_t lights_size = 1;
+	const uint8_t flash_count = 15;
+	const uint32_t wait_time = 50;
+
+	light_animation(game, lights, lights_size, flash_count, wait_time, GAME_DISPLAY_SCORE);
 }
 
 void victory_animation(GAME* game) {
 	LIGHT lights[] = {LIGHT_GREEN, LIGHT_WHITE, LIGHT_BLUE, LIGHT_RED};
-	light_animation(game, lights, 4, 16, 50, GAME_DISPLAY_SCORE);
+	const uint8_t lights_size = 4;
+	const uint8_t flash_count = 16;
+	const uint32_t wait_time = 50;
+
+	light_animation(game, lights, lights_size, flash_count, wait_time, GAME_DISPLAY_SCORE);
 }
 
 void display_score(uint8_t score) {
