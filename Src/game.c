@@ -74,38 +74,59 @@ void user_attempt(GAME* game) {
 	}
 }
 
-void game_over_animation() {
+void end_game_animation(GAME* game, LIGHT* lights, uint8_t lights_size) {
 	const uint8_t flash_count = 15;
 	const uint8_t flash_delay = 50;
 
-	for (int8_t i = 0; i < flash_count; ++i) {
-		turn_on(LIGHT_RED);
-		delay(flash_delay);
-		turn_off(LIGHT_RED);
-		delay(flash_delay);
+	static uint32_t last_transition_time;
+	static uint32_t last_call_time;
+	static uint8_t index;
+	static ANIMATION_STATE state = ANIMATION_START;
+
+	// If it's been more than 1 ms since the last call to this function, start a fresh
+	// animation
+	if (get_ms_ticks() - last_call_time > 1) {
+		state = ANIMATION_START;
+	}
+
+	last_call_time = get_ms_ticks();
+
+	switch (state) {
+		case ANIMATION_START:
+			index = 0;
+			last_transition_time = 0;
+			state = ANIMATION_LIGHT_ON;
+			break;
+		case ANIMATION_LIGHT_ON:
+			if (get_ms_ticks() - last_transition_time >= flash_delay) {
+				turn_on(lights[index % lights_size]);
+				last_transition_time = get_ms_ticks();
+				state = ANIMATION_LIGHT_OFF;
+			} break;
+		case ANIMATION_LIGHT_OFF:
+			if (get_ms_ticks() - last_transition_time >= flash_delay) {
+				turn_off(lights[index % lights_size]);
+
+				// Update the game state if the animation is finished. Otherwise,
+				// update the animation state
+				if (++index == flash_count) {
+					game->state = GAME_DISPLAY_SCORE;
+				} else {
+					last_transition_time = get_ms_ticks();
+					state = ANIMATION_LIGHT_ON;
+				}
+			} break;
 	}
 }
 
-void victory_animation() {
-	const uint8_t flash_delay = 80;
+void game_over_animation(GAME* game) {
+	LIGHT lights[] = {LIGHT_RED};
+	end_game_animation(game, lights, 1);
+}
 
-	for (size_t i = 0; i < 10; ++i) {
-		turn_on(LIGHT_GREEN);
-		delay(flash_delay);
-		turn_off(LIGHT_GREEN);
-
-		turn_on(LIGHT_WHITE);
-		delay(flash_delay);
-		turn_off(LIGHT_WHITE);
-
-		turn_on(LIGHT_BLUE);
-		delay(flash_delay);
-		turn_off(LIGHT_BLUE);
-
-		turn_on(LIGHT_RED);
-		delay(flash_delay);
-		turn_off(LIGHT_RED);
-	}
+void victory_animation(GAME* game) {
+	LIGHT lights[] = {LIGHT_GREEN, LIGHT_WHITE, LIGHT_BLUE, LIGHT_RED};
+	end_game_animation(game, lights, 4);
 }
 
 void display_score(uint8_t score) {

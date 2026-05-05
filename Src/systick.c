@@ -8,25 +8,6 @@
 #define CTRL_COUNTFLAG (1 << 16)
 #define SYSTICK_LOAD_VALUE 16000  // 16 MHz clock → 1 ms
 
-void delay(uint32_t ms) {
-    // 16000 ticks = 1 ms at 16 MHz
-    SYSTICK->LOAD = SYSTICK_LOAD_VALUE - 1;
-
-    // Clear current value register
-    SYSTICK->VAL = 0;
-
-    // Enable SysTick, use processor clock
-    SYSTICK->CTRL = CTRL_ENABLE | CTRL_CLKSOURCE;
-
-    for (uint32_t i = 0; i < ms; i++) {
-        // Wait until COUNTFLAG is set
-        while (!(SYSTICK->CTRL & CTRL_COUNTFLAG));
-    }
-
-    // Disable SysTick
-    SYSTICK->CTRL = 0;
-}
-
 void systick_init()
 {
 	SYSTICK->LOAD = SYSTICK_LOAD_VALUE - 1;  // reload value

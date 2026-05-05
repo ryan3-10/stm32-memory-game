@@ -9,7 +9,8 @@ typedef enum {
 	GAME_SEQUENCE,
 	GAME_USER_ATTEMPT,
 	GAME_VICTORY,
-	GAME_OVER
+	GAME_OVER,
+	GAME_DISPLAY_SCORE
 } GAME_STATE;
 
 typedef enum {
@@ -29,8 +30,9 @@ GAME get_new_game();
 void wait_to_start();
 void display_sequence(GAME* game);
 void user_attempt(GAME* game);
+void end_game_animation(GAME* game, LIGHT* lights, uint8_t lights_size);
 void game_over_animation();
-void victory_animation();
+void victory_animation(GAME* game);
 void display_score(uint8_t score);
 
 #endif /* GAME_H_ */

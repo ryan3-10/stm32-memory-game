@@ -44,14 +44,14 @@ int main(void) {
 				user_attempt(&game);
 				break;
 			case GAME_OVER:
-				game_over_animation();
-				display_score(game.round - 1);
-				game = get_new_game();
+				game_over_animation(&game);
 				break;
 			case GAME_VICTORY:
-				victory_animation();
+				victory_animation(&game);
+				break;
+			case GAME_DISPLAY_SCORE:
 				display_score(game.round - 1);
-				game = get_new_game();
+				break;
 		}
 	}
 }
