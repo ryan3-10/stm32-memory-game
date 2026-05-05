@@ -54,20 +54,17 @@ BUTTON get_input() {
 				pressed = BUTTON_NONE;
 				press_time = get_ms_ticks();
 				state = INPUT_DEBOUNCE_PRESS;
-			}
-			break;
+			} break;
 		case INPUT_DEBOUNCE_PRESS:
 			if (get_ms_ticks() - press_time >= debounce_ticks) {
 				turn_on((LIGHT)current);
 				state = INPUT_WAIT_RELEASE;
-			}
-			break;
+			} break;
 		case INPUT_WAIT_RELEASE:
 			if (!is_pressed(current)) {
 				release_time = get_ms_ticks();
 				state = INPUT_DEBOUNCE_RELEASE;
-			}
-			break;
+			} break;
 		case INPUT_DEBOUNCE_RELEASE:
 			if (get_ms_ticks() - release_time >= debounce_ticks) {
 				turn_off((LIGHT)current);
