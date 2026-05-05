@@ -30,7 +30,16 @@ GAME get_new_game();
 void wait_to_start();
 void display_sequence(GAME* game);
 void user_attempt(GAME* game);
-void end_game_animation(GAME* game, LIGHT* lights, uint8_t lights_size);
+
+void light_animation(
+	GAME* game,
+	LIGHT* lights,
+	uint8_t lights_size,
+	uint8_t flash_count,
+	uint32_t flash_delay,
+	GAME_STATE new_game_state
+);
+
 void game_over_animation();
 void victory_animation(GAME* game);
 void display_score(uint8_t score);
