@@ -28,4 +28,8 @@ uint32_t get_ms_ticks() {
 	return ms_ticks;
 }
 
+uint32_t elapsed(uint32_t timestamp) {
+	return ms_ticks - timestamp;
+}
+
 
