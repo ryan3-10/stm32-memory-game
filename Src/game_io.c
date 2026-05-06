@@ -30,7 +30,7 @@ void turn_off(LIGHT light) {
 	gpio_write(LIGHT_PORT, light_pins[light], 0);
 }
 
-void all_lights_off() {
+void all_lights_off(void) {
 	for (uint8_t i = 0; i < array_size; ++i) {
 		gpio_write(LIGHT_PORT, light_pins[i], 0);
 	}
@@ -40,7 +40,7 @@ uint8_t is_pressed(BUTTON button) {
 	return !gpio_read(BUTTON_PORT, button_pins[button]);
 }
 
-BUTTON get_input() {
+BUTTON get_input(void) {
 	const uint8_t debounce_ticks = 30;
 	static BUTTON current = BUTTON_NONE;
 	static INPUT_STATE state = INPUT_IDLE;
@@ -78,7 +78,7 @@ BUTTON get_input() {
 
 // This interrupt handler loops through button_pins to see which pending bit request is set
 // It then sets pressed according to the pending request
-void EXTI9_5_IRQHandler() {
+void EXTI9_5_IRQHandler(void) {
 	for (uint8_t i = 0; i < array_size; ++i) {
 		if (EXTI->PR & 1 << button_pins[i]) {
 			pressed = (BUTTON)i;

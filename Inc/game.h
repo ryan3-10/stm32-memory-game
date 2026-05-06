@@ -2,7 +2,6 @@
 #define GAME_H_
 
 #include <game_io.h>
-#include <stdint.h>
 
 typedef enum {
 	GAME_WAIT_START,
@@ -13,19 +12,11 @@ typedef enum {
 	GAME_DISPLAY_SCORE
 } GAME_STATE;
 
-typedef struct {
-	GAME_STATE state;
-	uint32_t round;
-	LIGHT sequence[15];
-} GAME;
-
-
-GAME get_new_game();
-void wait_to_start();
-void display_sequence(GAME* game);
-void user_attempt(GAME* game);
-void game_over_animation();
-void victory_animation(GAME* game);
-void display_score(uint8_t score);
+void game_reset(void);
+GAME_STATE game_get_state(void);
+void game_set_state(GAME_STATE state);
+LIGHT* game_get_sequence(void);
+uint32_t game_get_round(void);
+void game_level_up(void);
 
 #endif /* GAME_H_ */

@@ -17,7 +17,7 @@
 // RNG control register bits
 #define RNGEN_POS	(2u)
 
-void system_init() {
+void system_init(void) {
 	// Enable clock for PC, PE, RNG, and SYSCFG
 	RCC->AHB1ENR |= 1 << PORTC_CLOCK_POS;
 	RCC->AHB1ENR |= 1 << PORTE_CLOCK_POS;

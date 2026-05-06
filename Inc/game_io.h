@@ -27,8 +27,8 @@ typedef enum {
 
 void turn_on(LIGHT light);
 void turn_off(LIGHT light);
-void all_lights_off();
+void all_lights_off(void);
 uint8_t is_pressed(BUTTON button);
-BUTTON get_input();
+BUTTON get_input(void);
 
 #endif /* GAME_IO_H_ */

@@ -18,6 +18,7 @@
 
 #include <board.h>
 #include <game.h>
+#include <game_logic.h>
 #include <system.h>
 #include <systick.h>
 
@@ -29,28 +30,28 @@ int main(void) {
 	system_init();	// enables RCC clocks and sets up RNG
 	board_init(); 	// sets pins for I/O and pull up, and exti config
 	systick_init();	// enables systick for interrupts and timing delays
-	GAME game = get_new_game();
+	game_reset();
 
 	while(1) {
-		switch (game.state) {
+		switch (game_get_state()) {
 			case GAME_WAIT_START:
 				wait_to_start();
-				game.state = GAME_SEQUENCE;
+				game_set_state(GAME_SEQUENCE);
 				break;
 			case GAME_SEQUENCE:
-				display_sequence(&game);
+				display_sequence();
 				break;
 			case GAME_USER_ATTEMPT:
-				user_attempt(&game);
+				user_attempt();
 				break;
 			case GAME_OVER:
-				game_over_animation(&game);
+				game_over_animation();
 				break;
 			case GAME_VICTORY:
-				victory_animation(&game);
+				victory_animation();
 				break;
 			case GAME_DISPLAY_SCORE:
-				display_score(game.round - 1);
+				display_score(game_get_round() - 1);
 				break;
 		}
 	}

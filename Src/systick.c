@@ -8,7 +8,7 @@
 #define CTRL_COUNTFLAG (1 << 16)
 #define SYSTICK_LOAD_VALUE 16000  // 16 MHz clock → 1 ms
 
-void systick_init()
+void systick_init(void)
 {
 	SYSTICK->LOAD = SYSTICK_LOAD_VALUE - 1;  // reload value
 	SYSTICK->VAL  = 0;                        // reset current value
@@ -20,11 +20,11 @@ void systick_init()
 
 volatile uint32_t ms_ticks = 0;
 
-void SysTick_Handler() {
+void SysTick_Handler(void) {
     ++ms_ticks;
 }
 
-uint32_t get_ms_ticks() {
+uint32_t get_ms_ticks(void) {
 	return ms_ticks;
 }
 

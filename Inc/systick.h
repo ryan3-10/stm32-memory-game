@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-void systick_init();
-uint32_t get_ms_ticks();
+void systick_init(void);
+uint32_t get_ms_ticks(void);
 uint32_t elapsed(uint32_t timestamp);
 
 #endif /* SYSTICK_H_ */

@@ -1,6 +1,6 @@
 #include "tests.h"
-#include <game.h>
 #include <game_io.h>
+#include <game_logic.h>
 
 void test_debouncing() {
 	while (1) {
