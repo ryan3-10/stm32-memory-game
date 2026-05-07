@@ -30,13 +30,11 @@ int main(void) {
 	system_init();	// enables RCC clocks and sets up RNG
 	board_init(); 	// sets pins for I/O and pull up, and exti config
 	systick_init();	// enables systick for interrupts and timing delays
-	game_reset();
 
 	while(1) {
 		switch (game_get_state()) {
 			case GAME_WAIT_START:
 				wait_to_start();
-				game_set_state(GAME_SEQUENCE);
 				break;
 			case GAME_SEQUENCE:
 				display_sequence();

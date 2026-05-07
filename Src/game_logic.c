@@ -4,38 +4,67 @@
 #include <game_logic.h>
 #include <systick.h>
 
+static LIGHT game_over_lights[] = {LIGHT_RED};
+
+DISPLAY game_over_display = {
+	.state = DISPLAY_NEW,
+	.index = 0,
+	.lights = game_over_lights,
+	.lights_size = 1,
+	.start_delay = 0,
+	.flash_count = 16,
+	.flash_delay = 50
+};
+
+static LIGHT victory_lights[] = {LIGHT_GREEN, LIGHT_WHITE, LIGHT_BLUE, LIGHT_RED};
+DISPLAY victory_display = {
+	.state = DISPLAY_NEW,
+	.index = 0,
+	.lights = victory_lights,
+	.lights_size = 4,
+	.start_delay = 0,
+	.flash_count = 16,
+	.flash_delay = 50
+};
+
+// light_size and flash_count set in function
+DISPLAY sequence_display = {
+	.state = DISPLAY_NEW,
+	.index = 0,
+	.start_delay = 300,
+	.flash_delay = 300
+};
+
+uint8_t wait_to_start_done = 0;
+uint8_t display_score_done = 0;
+
 // Wait for the user to press the green button
 void wait_to_start() {
-	static uint8_t done = 0;
-
-	if (!done) {
+	if (!wait_to_start_done) {
+		game_reset();
 		turn_on(LIGHT_GREEN);
+		wait_to_start_done = 1;
 	}
 
 	while (get_input() != BUTTON_GREEN);
 	turn_off(LIGHT_GREEN);
+	wait_to_start_done = 0;
+	game_set_state(GAME_SEQUENCE);
 }
 
 void display_sequence() {
-	static DISPLAY display = {
-		.state = DISPLAY_NEW,
-		.index = 0,
-		.start_delay = 300,
-		.flash_delay = 300
-	};
-
 	// need to set these attributes separately because they will not be the same every time
 	// this function is called
-	if (display.state == DISPLAY_NEW) {
-		display.lights = game_get_sequence();
-		display.lights_size = game_get_round();
-		display.flash_count = game_get_round();
+	if (sequence_display.state == DISPLAY_NEW) {
+		sequence_display.lights = game_get_sequence();
+		sequence_display.lights_size = game_get_round();
+		sequence_display.flash_count = game_get_round();
 	}
 
-	light_animation(&display);
+	light_animation(&sequence_display);
 
-	if (display.state == DISPLAY_DONE) {
-		reset_display(&display);
+	if (sequence_display.state == DISPLAY_DONE) {
+		reset_display(&sequence_display);
 		game_set_state(GAME_USER_ATTEMPT);
 	}
 }
@@ -65,55 +94,39 @@ void user_attempt() {
 }
 
 void game_over_animation() {
-	static LIGHT lights[] = {LIGHT_RED};
-	static DISPLAY display = {
-		.state = DISPLAY_NEW,
-		.index = 0,
-		.lights = lights,
-		.lights_size = 1,
-		.start_delay = 0,
-		.flash_count = 16,
-		.flash_delay = 50
-	};
+	light_animation(&game_over_display);
 
-	light_animation(&display);
-
-	if (display.state == DISPLAY_DONE) {
-		reset_display(&display);
+	if (game_over_display.state == DISPLAY_DONE) {
+		reset_display(&game_over_display);
 		game_set_state(GAME_DISPLAY_SCORE);
 	}
 }
 
 void victory_animation() {
-	static LIGHT lights[] = {LIGHT_GREEN, LIGHT_WHITE, LIGHT_BLUE, LIGHT_RED};
-	static DISPLAY display = {
-		.state = DISPLAY_NEW,
-		.index = 0,
-		.lights = lights,
-		.lights_size = 4,
-		.start_delay = 0,
-		.flash_count = 16,
-		.flash_delay = 50
-	};
+	light_animation(&victory_display);
 
-	light_animation(&display);
-
-		if (display.state == DISPLAY_DONE) {
-			reset_display(&display);
+		if (victory_display.state == DISPLAY_DONE) {
+			reset_display(&victory_display);
 			game_set_state(GAME_DISPLAY_SCORE);
 		}
 }
 
 void display_score(uint8_t score) {
-	LIGHT light_order[] = {LIGHT_RED, LIGHT_BLUE, LIGHT_WHITE, LIGHT_GREEN};
+	static LIGHT light_order[] = {LIGHT_RED, LIGHT_BLUE, LIGHT_WHITE, LIGHT_GREEN};
 
-	for (uint8_t i = 0; i < 4; ++i) {
-		if (score & 1 << i) {
-			turn_on(light_order[i]);
+	if (!display_score_done) {
+		for (uint8_t i = 0; i < 4; ++i) {
+			if (score & 1 << i) {
+				turn_on(light_order[i]);
+			}
 		}
+
+		display_score_done = 1;
 	}
 
 	while (get_input() == BUTTON_NONE);
 	all_lights_off();
+	display_score_done = 0;
+	game_set_state(GAME_WAIT_START);
 }
 
