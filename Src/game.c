@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define NUM_OF_LIGHTS 4;
 // define the struct here so external modules can't create a GAME instance
 typedef struct {
 	GAME_STATE state;
@@ -16,7 +15,7 @@ static GAME game_instance;
 void game_reset() {
 	game_instance.state = GAME_WAIT_START;
 	game_instance.round = 1;
-	game_instance.sequence[0] = rand() % NUM_OF_LIGHTS;
+	game_instance.sequence[0] = rand() % BUTTON_COUNT;
 }
 
 GAME_STATE game_get_state() {
@@ -37,7 +36,7 @@ uint32_t game_get_round() {
 
 void game_level_up() {
 	if (++game_instance.round <= 15) {
-		game_instance.sequence[game_instance.round - 1] = rand() % NUM_OF_LIGHTS;
+		game_instance.sequence[game_instance.round - 1] = rand() % BUTTON_COUNT;
 	}
 }
 

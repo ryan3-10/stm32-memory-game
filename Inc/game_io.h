@@ -15,7 +15,8 @@ typedef enum {
 	BUTTON_GREEN,
 	BUTTON_WHITE,
 	BUTTON_BLUE,
-	BUTTON_RED
+	BUTTON_RED,
+	BUTTON_COUNT,
 } BUTTON;
 
 typedef enum {

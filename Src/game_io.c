@@ -20,8 +20,6 @@ uint8_t button_pins[] = {
 	RED_BUTTON_PIN
 };
 
-const uint8_t array_size = 4;
-
 void turn_on(LIGHT light) {
 	gpio_write(LIGHT_PORT, light_pins[light], 1);
 }
@@ -31,7 +29,7 @@ void turn_off(LIGHT light) {
 }
 
 void all_lights_off(void) {
-	for (uint8_t i = 0; i < array_size; ++i) {
+	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 		gpio_write(LIGHT_PORT, light_pins[i], 0);
 	}
 }
@@ -79,7 +77,7 @@ BUTTON get_input(void) {
 // This interrupt handler loops through button_pins to see which pending bit request is set
 // It then sets pressed according to the pending request
 void EXTI9_5_IRQHandler(void) {
-	for (uint8_t i = 0; i < array_size; ++i) {
+	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 		if (EXTI->PR & 1 << button_pins[i]) {
 			pressed = (BUTTON)i;
 			EXTI->PR = 1 << button_pins[i];

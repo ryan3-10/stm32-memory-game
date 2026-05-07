@@ -21,7 +21,7 @@ DISPLAY victory_display = {
 	.state = DISPLAY_NEW,
 	.index = 0,
 	.lights = victory_lights,
-	.lights_size = 4,
+	.lights_size = BUTTON_COUNT,
 	.start_delay = 0,
 	.flash_count = 16,
 	.flash_delay = 50
@@ -115,7 +115,7 @@ void display_score(uint8_t score) {
 	static LIGHT light_order[] = {LIGHT_RED, LIGHT_BLUE, LIGHT_WHITE, LIGHT_GREEN};
 
 	if (!display_score_done) {
-		for (uint8_t i = 0; i < 4; ++i) {
+		for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 			if (score & 1 << i) {
 				turn_on(light_order[i]);
 			}
