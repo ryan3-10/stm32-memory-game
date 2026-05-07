@@ -7,15 +7,15 @@
 typedef struct {
 	GAME_STATE state;
 	uint32_t round;
-	LIGHT sequence[15];
+	LIGHT sequence[MAX_SCORE];
 } GAME;
 
 static GAME game;
 
 void game_reset() {
 	game.state = GAME_WAIT_START;
-	game.round = 1;
-	game.sequence[0] = rand() % BUTTON_COUNT;
+	game.round = 15;
+	game.sequence[0] = BUTTON_GREEN;
 }
 
 GAME_STATE game_get_state() {

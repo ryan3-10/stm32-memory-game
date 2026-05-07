@@ -3,7 +3,7 @@
 #include <systick.h>
 #include <stdint.h>
 
-void light_animation(DISPLAY* display) {
+void update_animation(DISPLAY* display) {
 	switch (display->state) {
 		// Just grab a timestamp and pass to IDLE
 	    case DISPLAY_NEW:

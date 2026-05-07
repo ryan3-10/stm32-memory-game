@@ -17,6 +17,8 @@
  */
 
 #include <board.h>
+#include <event.h>
+#include <event_handlers.h>
 #include <game.h>
 #include <game_logic.h>
 #include <system.h>
@@ -32,9 +34,13 @@ int main(void) {
 	systick_init();	// enables systick for interrupts and timing delays
 
 	while(1) {
+		while (!eq_is_empty()) {
+			handle_event(eq_pop());
+		}
+
 		switch (game_get_state()) {
 			case GAME_WAIT_START:
-				wait_to_start();
+				wait_start();
 				break;
 			case GAME_SEQUENCE:
 				display_sequence();

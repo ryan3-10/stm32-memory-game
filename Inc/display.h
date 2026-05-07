@@ -23,7 +23,7 @@ typedef struct {
 	uint32_t flash_delay;
 } DISPLAY;
 
-void light_animation(DISPLAY* display);
+void update_animation(DISPLAY* display);
 void reset_display(DISPLAY* display);
 
 #endif /* DISPLAY_H_ */

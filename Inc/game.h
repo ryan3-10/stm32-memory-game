@@ -3,6 +3,8 @@
 
 #include <game_io.h>
 
+#define MAX_SCORE 15
+
 typedef enum {
 	GAME_WAIT_START,
 	GAME_SEQUENCE,

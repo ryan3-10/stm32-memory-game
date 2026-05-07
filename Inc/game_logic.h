@@ -4,7 +4,7 @@
 #include <game_io.h>
 #include <stdint.h>
 
-void wait_to_start(void);
+void wait_start(void);
 void display_sequence(void);
 void user_attempt(void);
 void game_over_animation(void);
