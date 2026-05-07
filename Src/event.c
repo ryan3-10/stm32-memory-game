@@ -13,7 +13,8 @@ void eq_push(EVENT event) {
 
 EVENT eq_pop() {
 	if (eq_is_empty()) {
-		return EVENT_NONE;
+		EVENT event = { .type = EVENT_NONE };
+		return event;
 	}
 
 	EVENT event = eq.events[eq.tail];
