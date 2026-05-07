@@ -45,11 +45,6 @@ void wait_to_start() {
 		turn_on(LIGHT_GREEN);
 		wait_to_start_done = 1;
 	}
-
-	while (get_input() != BUTTON_GREEN);
-	turn_off(LIGHT_GREEN);
-	wait_to_start_done = 0;
-	game_set_state(GAME_SEQUENCE);
 }
 
 void display_sequence() {
