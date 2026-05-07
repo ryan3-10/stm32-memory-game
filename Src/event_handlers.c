@@ -4,6 +4,8 @@
 #include <game.h>
 #include <game_io.h>
 
+#define DEBOUNCE_THRESHOLD 30
+
 void (*event_handlers[])(EVENT) = {
 	wait_start_handler,
 	sequence_handler,
@@ -13,25 +15,44 @@ void (*event_handlers[])(EVENT) = {
 	display_score_handler
 };
 
+uint8_t debounce_detected(EVENT current) {
+	static EVENT previous;
+	uint32_t time_diff = current.timestamp - previous.timestamp;
+
+	uint8_t is_debounce =
+		current.type == previous.type
+		&& current.button == previous.button
+		&& time_diff < DEBOUNCE_THRESHOLD;
+
+
+	if (is_debounce) {
+		is_debounce = 50;
+	}
+	previous = current;
+	return is_debounce;
+}
+
 void handle_event(EVENT event) {
-	event_handlers[game_get_state()](event);
+	if (!debounce_detected(event)) {
+		event_handlers[game_get_state()](event);
+	}
 }
 
 void wait_start_handler(EVENT event) {
 	switch (event.type) {
 		case EVENT_BUTTON_PRESSED:
 			turn_on(event.button);
-			break;
-
-		case EVENT_BUTTON_RELEASED:
-			turn_off(event.button);
 			if (event.button == BUTTON_GREEN) {
-				display_sequence_reset = 1;
+				turn_off(BUTTON_GREEN);
 				game_set_state(GAME_SEQUENCE);
 			}
 			break;
 
-		// Ignore timeout events
+		case EVENT_BUTTON_RELEASED:
+			turn_off(event.button);
+			break;
+
+		// Ignore everything else
 		default:
 			break;
 	}
@@ -42,12 +63,10 @@ void sequence_handler(EVENT event) {
 		// Don't allow button presses during sequence display
 		case EVENT_BUTTON_PRESSED:
 			all_lights_off();
-			game_over_animation_reset = 1;
 			game_set_state(GAME_OVER);
 			break;
 
 		case EVENT_DISPLAY_DONE:
-			user_attempt_reset = 1;
 			game_set_state(GAME_USER_ATTEMPT);
 			break;
 
@@ -78,7 +97,6 @@ void user_attempt_handler(EVENT event) {
 		case EVENT_TIMEOUT:
 			all_lights_off();
 			index = 0;
-			game_over_animation_reset = 1;
 			game_set_state(GAME_OVER);
 			break;
 
@@ -95,10 +113,8 @@ void correct_input_helper(uint8_t* index) {
 
 		if (game_get_round() > MAX_SCORE) {
 			new_state = GAME_VICTORY;
-			victory_animation_reset = 1;
 		} else {
 			new_state = GAME_SEQUENCE;
-			display_sequence_reset = 1;
 		}
 
 		game_set_state(new_state);
@@ -107,7 +123,6 @@ void correct_input_helper(uint8_t* index) {
 
 void incorrect_input_helper(uint8_t* index) {
 	*index = 0;
-	game_over_animation_reset = 1;
 	game_set_state(GAME_OVER);
 }
 
@@ -122,14 +137,12 @@ void game_over_hanlder(EVENT event) {
 void endgame_helper(EVENT event) {
 	switch (event.type) {
 		// Cancels the animation
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON_PRESSED:
 			all_lights_off();
-			display_score_reset = 1;
 			game_set_state(GAME_DISPLAY_SCORE);
 			break;
 
 		case EVENT_DISPLAY_DONE:
-			display_score_reset = 1;
 			game_set_state(GAME_DISPLAY_SCORE);
 		break;
 
@@ -141,10 +154,9 @@ void endgame_helper(EVENT event) {
 
 void display_score_handler(EVENT event) {
 	switch (event.type) {
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON_PRESSED:
 			all_lights_off();
 			game_reset();
-			wait_start_reset = 1;
 			game_set_state(GAME_WAIT_START);
 			break;
 

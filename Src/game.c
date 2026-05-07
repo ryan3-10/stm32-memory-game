@@ -8,6 +8,7 @@ typedef struct {
 	GAME_STATE state;
 	uint32_t round;
 	LIGHT sequence[MAX_SCORE];
+	uint8_t in_new_state;
 } GAME;
 
 static GAME game;
@@ -16,6 +17,7 @@ void game_reset() {
 	game.state = GAME_WAIT_START;
 	game.round = 1;
 	game.sequence[0] = rand() % 4;
+	game.in_new_state = 1;
 }
 
 GAME_STATE game_get_state() {
@@ -23,6 +25,7 @@ GAME_STATE game_get_state() {
 }
 
 void game_set_state(GAME_STATE state) {
+	game.in_new_state = 1;
 	game.state = state;
 }
 
@@ -32,6 +35,13 @@ LIGHT* game_get_sequence() {
 
 uint32_t game_get_round() {
 	return game.round;
+}
+
+// A flag to see if the game has just entered a new state or has been circulating
+uint8_t game_in_new_state(void) {
+	uint8_t in_new_state = game.in_new_state;
+	game.in_new_state = 0;
+	return in_new_state;
 }
 
 void game_level_up() {

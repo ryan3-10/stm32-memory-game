@@ -19,6 +19,7 @@ GAME_STATE game_get_state(void);
 void game_set_state(GAME_STATE state);
 LIGHT* game_get_sequence(void);
 uint32_t game_get_round(void);
+uint8_t game_in_new_state(void);
 void game_level_up(void);
 
 #endif /* GAME_H_ */
