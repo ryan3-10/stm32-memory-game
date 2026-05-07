@@ -8,6 +8,7 @@ void (*event_handlers[])(EVENT) = {
 	wait_start_handler,
 	sequence_handler,
 	user_attempt_handler,
+	victory_handler,
 	game_over_hanlder,
 	display_score_handler
 };
@@ -111,13 +112,44 @@ void incorrect_input_helper(uint8_t* index) {
 }
 
 void victory_handler(EVENT event) {
-
+	endgame_helper(event);
 }
 
 void game_over_hanlder(EVENT event) {
+	endgame_helper(event);
+}
 
+void endgame_helper(EVENT event) {
+	switch (event.type) {
+		// Cancels the animation
+		case EVENT_BUTTON_RELEASED:
+			all_lights_off();
+			display_score_reset = 1;
+			game_set_state(GAME_DISPLAY_SCORE);
+			break;
+
+		case EVENT_DISPLAY_DONE:
+			display_score_reset = 1;
+			game_set_state(GAME_DISPLAY_SCORE);
+		break;
+
+		// Ignore everything else
+		default:
+			break;
+	}
 }
 
 void display_score_handler(EVENT event) {
+	switch (event.type) {
+		case EVENT_BUTTON_RELEASED:
+			all_lights_off();
+			game_reset();
+			wait_start_reset = 1;
+			game_set_state(GAME_WAIT_START);
+			break;
 
+		// Ignore everything else
+		default:
+			break;
+	}
 }

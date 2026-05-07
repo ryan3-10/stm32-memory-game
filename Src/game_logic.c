@@ -125,7 +125,6 @@ void display_score(uint8_t score) {
 			}
 		}
 
-		game_reset();
 		display_score_reset = 0;
 	}
 }

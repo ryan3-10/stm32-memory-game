@@ -22,5 +22,6 @@ void display_score_handler(EVENT event);
 // Input handler helpers
 void correct_input_helper(uint8_t* index);
 void incorrect_input_helper(uint8_t* index);
+void endgame_helper(EVENT event);
 
 #endif /* EVENT_HANDLERS_H_ */
