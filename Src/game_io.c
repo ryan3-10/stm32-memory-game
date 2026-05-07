@@ -43,42 +43,6 @@ uint8_t is_pressed(BUTTON button) {
 	return !gpio_read(BUTTON_PORT, button_pins[button]);
 }
 
-BUTTON get_input(void) {
-	const uint8_t debounce_ticks = 30;
-	static BUTTON current = BUTTON_NONE;
-	static INPUT_STATE state = INPUT_IDLE;
-	static uint32_t press_time;
-	static uint32_t release_time;
-
-	switch (state) {
-		case INPUT_IDLE:
-			if (pressed != BUTTON_NONE) {
-				current = pressed;
-				pressed = BUTTON_NONE;
-				press_time = get_ms_ticks();
-				state = INPUT_DEBOUNCE_PRESS;
-			} break;
-		case INPUT_DEBOUNCE_PRESS:
-			if (get_ms_ticks() - press_time >= debounce_ticks) {
-				turn_on((LIGHT)current);
-				state = INPUT_WAIT_RELEASE;
-			} break;
-		case INPUT_WAIT_RELEASE:
-			if (!is_pressed(current)) {
-				release_time = get_ms_ticks();
-				state = INPUT_DEBOUNCE_RELEASE;
-			} break;
-		case INPUT_DEBOUNCE_RELEASE:
-			if (get_ms_ticks() - release_time >= debounce_ticks) {
-				turn_off((LIGHT)current);
-				state = INPUT_IDLE;
-				return current;
-			}
-	}
-		pressed = BUTTON_NONE;
-		return BUTTON_NONE;
-}
-
 // This interrupt handler loops through button_pins to see which pending bit request is set
 // It then sets pressed according to the pending request
 void EXTI9_5_IRQHandler(void) {

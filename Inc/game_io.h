@@ -31,6 +31,5 @@ void turn_off(LIGHT light);
 void set_light(LIGHT light, uint8_t value);
 void all_lights_off(void);
 uint8_t is_pressed(BUTTON button);
-BUTTON get_input(void);
 
 #endif /* GAME_IO_H_ */
