@@ -32,6 +32,7 @@ int main(void) {
 	system_init();	// enables RCC clocks and sets up RNG
 	board_init(); 	// sets pins for I/O and pull up, and exti config
 	systick_init();	// enables systick for interrupts and timing delays
+	game_reset();
 
 	while(1) {
 		while (!eq_is_empty()) {
