@@ -18,7 +18,6 @@ uint8_t display_score_reset = 1;
 // Wait for the user to press the green button
 void wait_start() {
 	if (wait_start_reset) {
-		game_reset();
 		turn_on(LIGHT_GREEN);
 		wait_start_reset = 0;
 	}
@@ -126,6 +125,7 @@ void display_score(uint8_t score) {
 			}
 		}
 
+		game_reset();
 		display_score_reset = 0;
 	}
 }
