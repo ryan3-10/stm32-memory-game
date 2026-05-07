@@ -3,6 +3,7 @@
 #include <gpio.h>
 #include <systick.h>
 #include <stdint.h>
+#include <event.h>
 
 volatile BUTTON pressed = BUTTON_NONE;
 
@@ -79,7 +80,12 @@ BUTTON get_input(void) {
 void EXTI9_5_IRQHandler(void) {
 	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 		if (EXTI->PR & 1 << button_pins[i]) {
-			pressed = (BUTTON)i;
+			EVENT event = {
+				is_pressed((BUTTON)i) ? EVENT_BUTTON_PRESSED : EVENT_BUTTON_RELEASED,
+				(BUTTON)i,
+				get_ms_ticks()
+			};
+			eq_push(event);
 			EXTI->PR = 1 << button_pins[i];
 			break;
 		}
