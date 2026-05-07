@@ -29,6 +29,10 @@ void turn_off(LIGHT light) {
 	gpio_write(LIGHT_PORT, light_pins[light], 0);
 }
 
+void set_light(LIGHT light, uint8_t value) {
+	gpio_write(LIGHT_PORT, light_pins[light], value);
+}
+
 void all_lights_off(void) {
 	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 		gpio_write(LIGHT_PORT, light_pins[i], 0);
