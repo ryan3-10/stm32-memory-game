@@ -19,10 +19,7 @@ void handle_event(EVENT event) {
 
 void wait_start_handler(EVENT event) {
 	switch (event.type) {
-		case EVENT_BUTTON_PRESSED:
-			break;
-
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON:
 			if (event.button == BUTTON_GREEN) {
 				display_sequence_reset = 1;
 				game_set_state(GAME_SEQUENCE);
@@ -38,7 +35,7 @@ void wait_start_handler(EVENT event) {
 void sequence_handler(EVENT event) {
 	switch (event.type) {
 		// Don't allow button presses during sequence display
-		case EVENT_BUTTON_PRESSED:
+		case EVENT_BUTTON:
 			game_over_animation_reset = 1;
 			game_set_state(GAME_OVER);
 			break;
@@ -58,10 +55,7 @@ void user_attempt_handler(EVENT event) {
 	static uint8_t index;
 
 	switch (event.type) {
-		case EVENT_BUTTON_PRESSED:
-			break;
-
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON:
 			if ((LIGHT)event.button == game_get_sequence()[index]) {
 				correct_input_helper(&index);
 			} else {
@@ -115,7 +109,7 @@ void game_over_hanlder(EVENT event) {
 void endgame_helper(EVENT event) {
 	switch (event.type) {
 		// Cancels the animation
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON:
 			display_score_reset = 1;
 			game_set_state(GAME_DISPLAY_SCORE);
 			break;
@@ -133,7 +127,7 @@ void endgame_helper(EVENT event) {
 
 void display_score_handler(EVENT event) {
 	switch (event.type) {
-		case EVENT_BUTTON_RELEASED:
+		case EVENT_BUTTON:
 			game_reset();
 			wait_start_reset = 1;
 			game_set_state(GAME_WAIT_START);

@@ -61,12 +61,6 @@ void exti_init() {
 	EXTI->IMR |= 1 << BLUE_BUTTON_PIN;
 	EXTI->IMR |= 1 << RED_BUTTON_PIN;
 
-	// Set falling trigger selection for for each EXTI associated with a button's pin
-	EXTI->FTSR |= 1 << GREEN_BUTTON_PIN;
-	EXTI->FTSR |= 1 << WHITE_BUTTON_PIN;
-	EXTI->FTSR |= 1 << BLUE_BUTTON_PIN;
-	EXTI->FTSR |= 1 << RED_BUTTON_PIN;
-
 	// Set rising trigger selection for for each EXTI associated with a button's pin
 	EXTI->RTSR |= 1 << GREEN_BUTTON_PIN;
 	EXTI->RTSR |= 1 << WHITE_BUTTON_PIN;

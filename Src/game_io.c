@@ -85,13 +85,12 @@ void EXTI9_5_IRQHandler(void) {
 	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 		if (EXTI->PR & 1 << button_pins[i]) {
 			EVENT event = {
-				is_pressed((BUTTON)i) ? EVENT_BUTTON_PRESSED : EVENT_BUTTON_RELEASED,
+				EVENT_BUTTON,
 				(BUTTON)i,
 				get_ms_ticks()
 			};
 			eq_push(event);
-			EXTI->PR = 1 << button_pins[i];
-			break;
+			EXTI->PR = 1 << button_pins[i];	// Clear pending bit
 		}
 	}
 }
