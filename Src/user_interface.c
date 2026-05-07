@@ -2,8 +2,8 @@
 #include <event.h>
 #include <game.h>
 #include <game_io.h>
-#include <game_logic.h>
 #include <systick.h>
+#include <user_interface.h>
 
 #define TIMEOUT_FACTOR 1000
 
@@ -18,8 +18,15 @@ uint8_t display_score_reset = 1;
 // Wait for the user to press the green button
 void wait_start() {
 	if (wait_start_reset) {
+		all_lights_off();
 		turn_on(LIGHT_GREEN);
 		wait_start_reset = 0;
+	}
+
+	// In this loop, we ignore green button presses because it's already on and
+	// should not be turned off during this function
+	for (uint8_t i = BUTTON_GREEN + 1; i < BUTTON_COUNT; ++i) {
+			set_light(i, is_pressed(i));
 	}
 }
 
@@ -34,6 +41,7 @@ void display_sequence() {
 	// Need to set these attributes separately because they will not be the same every time
 	// this function is called
 	if (display_sequence_reset) {
+		all_lights_off();
 		reset_display(&display);
 		display.lights = game_get_sequence();
 		display.lights_size = game_get_round();
@@ -53,8 +61,13 @@ void user_attempt() {
 	static uint32_t start_time;
 
 	if (user_attempt_reset) {
+		all_lights_off();
 		start_time = get_ms_ticks();
 		user_attempt_reset = 0;
+	}
+
+	for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
+		set_light(i, is_pressed(i));
 	}
 
 	if (elapsed(start_time) >= game_get_round() * TIMEOUT_FACTOR) {
@@ -77,6 +90,7 @@ void game_over_animation() {
 	};
 
 	if (game_over_animation_reset) {
+		all_lights_off();
 		reset_display(&display);
 		game_over_animation_reset = 0;
 	}
@@ -103,6 +117,7 @@ void victory_animation() {
 	};
 
 		if (victory_animation_reset) {
+			all_lights_off();
 			reset_display(&display);
 			victory_animation_reset = 0;
 		}
@@ -115,10 +130,13 @@ void victory_animation() {
 		}
 }
 
-void display_score(uint8_t score) {
+void display_score(void) {
 	const static LIGHT light_order[] = {LIGHT_RED, LIGHT_BLUE, LIGHT_WHITE, LIGHT_GREEN};
 
 	if (display_score_reset) {
+		all_lights_off();
+		const uint8_t score = game_get_round() - 1;
+
 		for (uint8_t i = 0; i < BUTTON_COUNT; ++i) {
 			if (score & 1 << i) {
 				turn_on(light_order[i]);

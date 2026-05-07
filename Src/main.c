@@ -20,9 +20,9 @@
 #include <event.h>
 #include <event_handlers.h>
 #include <game.h>
-#include <game_logic.h>
 #include <system.h>
 #include <systick.h>
+#include <user_interface.h>
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -56,7 +56,7 @@ int main(void) {
 				victory_animation();
 				break;
 			case GAME_DISPLAY_SCORE:
-				display_score(game_get_round() - 1);
+				display_score();
 				break;
 		}
 	}
