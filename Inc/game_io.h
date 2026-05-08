@@ -26,6 +26,8 @@ typedef enum {
     INPUT_DEBOUNCE_RELEASE
 } INPUT_STATE;
 
+uint8_t get_light_pin(LIGHT light);
+uint8_t get_button_pin(BUTTON button);
 void turn_on(LIGHT light);
 void turn_off(LIGHT light);
 void set_light(LIGHT light, uint8_t value);

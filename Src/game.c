@@ -15,7 +15,7 @@ static GAME game;
 void game_reset() {
 	game.state = GAME_WAIT_START;
 	game.round = 1;
-	game.sequence[0] = rand() % 4;
+	game.sequence[0] = rand() % BUTTON_COUNT;
 }
 
 GAME_STATE game_get_state() {

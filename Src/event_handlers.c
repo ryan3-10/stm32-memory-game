@@ -26,7 +26,7 @@ void wait_start_handler(EVENT event) {
 			}
 			break;
 
-		// Ignore timeout events
+		// Ignore everything else
 		default:
 			break;
 	}
