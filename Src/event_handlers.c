@@ -21,7 +21,6 @@ void wait_start_handler(EVENT event) {
 	switch (event.type) {
 		case EVENT_BUTTON:
 			if (event.button == BUTTON_GREEN) {
-				display_sequence_reset = 1;
 				game_set_state(GAME_SEQUENCE);
 			}
 			break;
@@ -36,12 +35,10 @@ void sequence_handler(EVENT event) {
 	switch (event.type) {
 		// Don't allow button presses during sequence display
 		case EVENT_BUTTON:
-			game_over_animation_reset = 1;
 			game_set_state(GAME_OVER);
 			break;
 
 		case EVENT_DISPLAY_DONE:
-			user_attempt_reset = 1;
 			game_set_state(GAME_USER_ATTEMPT);
 			break;
 
@@ -65,7 +62,6 @@ void user_attempt_handler(EVENT event) {
 
 		case EVENT_TIMEOUT:
 			index = 0;
-			game_over_animation_reset = 1;
 			game_set_state(GAME_OVER);
 			break;
 
@@ -82,10 +78,8 @@ void correct_input_helper(uint8_t* index) {
 
 		if (game_get_round() > MAX_SCORE) {
 			new_state = GAME_VICTORY;
-			victory_animation_reset = 1;
 		} else {
 			new_state = GAME_SEQUENCE;
-			display_sequence_reset = 1;
 		}
 
 		game_set_state(new_state);
@@ -94,7 +88,6 @@ void correct_input_helper(uint8_t* index) {
 
 void incorrect_input_helper(uint8_t* index) {
 	*index = 0;
-	game_over_animation_reset = 1;
 	game_set_state(GAME_OVER);
 }
 
@@ -110,12 +103,10 @@ void endgame_helper(EVENT event) {
 	switch (event.type) {
 		// Cancels the animation
 		case EVENT_BUTTON:
-			display_score_reset = 1;
 			game_set_state(GAME_DISPLAY_SCORE);
 			break;
 
 		case EVENT_DISPLAY_DONE:
-			display_score_reset = 1;
 			game_set_state(GAME_DISPLAY_SCORE);
 		break;
 
@@ -129,7 +120,6 @@ void display_score_handler(EVENT event) {
 	switch (event.type) {
 		case EVENT_BUTTON:
 			game_reset();
-			wait_start_reset = 1;
 			game_set_state(GAME_WAIT_START);
 			break;
 
