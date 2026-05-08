@@ -8,7 +8,7 @@ void wait_start_handler(EVENT event);
 void sequence_handler(EVENT event);
 void user_attempt_handler(EVENT event);
 void victory_handler(EVENT event);
-void game_over_hanlder(EVENT event);
+void game_over_handler(EVENT event);
 void display_score_handler(EVENT event);
 
 // Input handler helpers

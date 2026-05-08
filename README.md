@@ -48,7 +48,7 @@ Each state has a dedicated event handler that processes only relevant events:
 - `sequence_handler()`: Ignores input during display; advances on `EVENT_DISPLAY_DONE`
 - `user_attempt_handler()`: Matches button presses to sequence; handles timeout
 - `victory_handler()`: Victory animation completion
-- `game_over_hanlder()`: Defeat animation completion
+- `game_over_handler()`: Defeat animation completion
 - `display_score_handler()`: Shows score, waits to restart
 
 ### User Interface Functions

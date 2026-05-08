@@ -9,7 +9,7 @@ void (*event_handlers[])(EVENT) = {
 	sequence_handler,
 	user_attempt_handler,
 	victory_handler,
-	game_over_hanlder,
+	game_over_handler,
 	display_score_handler
 };
 
@@ -95,7 +95,7 @@ void victory_handler(EVENT event) {
 	endgame_helper(event);
 }
 
-void game_over_hanlder(EVENT event) {
+void game_over_handler(EVENT event) {
 	endgame_helper(event);
 }
 
