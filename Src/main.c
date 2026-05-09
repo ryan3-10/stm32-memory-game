@@ -38,26 +38,7 @@ int main(void) {
 		while (!eq_is_empty()) {
 			handle_event(eq_pop());
 		}
-
-		switch (game_get_state()) {
-			case GAME_WAIT_START:
-				wait_start();
-				break;
-			case GAME_SEQUENCE:
-				display_sequence();
-				break;
-			case GAME_USER_ATTEMPT:
-				user_attempt();
-				break;
-			case GAME_OVER:
-				game_over_animation();
-				break;
-			case GAME_VICTORY:
-				victory_animation();
-				break;
-			case GAME_DISPLAY_SCORE:
-				display_score();
-				break;
-		}
+		update_ui();
 	}
 }
+

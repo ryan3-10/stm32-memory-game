@@ -4,6 +4,7 @@
 #include <game_io.h>
 #include <stdint.h>
 
+void update_ui(void);
 void wait_start(void);
 void display_sequence(void);
 void user_attempt(void);
