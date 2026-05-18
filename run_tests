@@ -1,0 +1,2 @@
+#!/bin/bash
+mkdir -p build-tests && cd build-tests && cmake .. && make && ctest --verbose
