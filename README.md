@@ -94,6 +94,21 @@ make -C Debug/
 st-flash write Debug/stm32-memory-game.bin 0x08000000
 ```
 
+### Testing
+
+Run the unit tests using the provided script (Unix terminal, WSL, or Git Bash on Windows):
+
+```bash
+./run_tests
+```
+
+This script builds and executes all tests using Google Test (GTest)
+
+Tests cover:
+- **Game logic**: State transitions, sequence generation, round progression
+- **Event handlers**: Button input handling, timeout behavior, state-specific event processing
+- **Event queue**: Circular buffer operations, push/pop mechanics
+
 ## How to Play
 
 1. **Start**: Press the green button when game shows green LED
