@@ -59,3 +59,4 @@ stm32-memory-game.launch
 .settings/
 .cproject
 
+build-tests/
