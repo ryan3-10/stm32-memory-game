@@ -17,17 +17,19 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 include(GoogleTest)
 
-add_executable(game_tests
+add_executable(tests
     tests/game_test.cpp
+    tests/event_handlers_test.cpp
     Src/game.c
+    Src/event_handlers.c
 )
 
-target_link_libraries(game_tests gtest gtest_main)
+target_link_libraries(tests gtest gtest_main)
 
-target_include_directories(game_tests PRIVATE
+target_include_directories(tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Inc
 )
 
 set_source_files_properties(Src/game.c PROPERTIES LANGUAGE C)
 
-gtest_discover_tests(game_tests)
+gtest_discover_tests(tests)
