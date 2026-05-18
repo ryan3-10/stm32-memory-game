@@ -103,12 +103,9 @@ void endgame_helper(EVENT event) {
 	switch (event.type) {
 		// Cancels the animation
 		case EVENT_BUTTON:
-			game_set_state(GAME_DISPLAY_SCORE);
-			break;
-
 		case EVENT_DISPLAY_DONE:
 			game_set_state(GAME_DISPLAY_SCORE);
-		break;
+			break;
 
 		// Ignore everything else
 		default:
