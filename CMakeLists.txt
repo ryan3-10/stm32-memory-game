@@ -20,8 +20,10 @@ include(GoogleTest)
 add_executable(tests
     tests/game_test.cpp
     tests/event_handlers_test.cpp
+    tests/event_test.cpp
     Src/game.c
     Src/event_handlers.c
+    Src/event.c
 )
 
 target_link_libraries(tests gtest gtest_main)
