@@ -7,7 +7,7 @@ A Simon Says implementation on the **STM32F407** microcontroller, demonstrating 
 
 ## Overview
 
-This project implements a classic memory/pattern matching game on an ARM Cortex-M4 microcontroller. The game displays increasingly complex sequences of colored lights (up to 15 rounds); the player must reproduce each sequence by pressing corresponding buttons.
+This project implements a classic memory/pattern matching game on an ARM Cortex-M4 microcontroller. The game displays increasingly complex sequences of colored lights (up to 15 rounds); the player must reproduce each sequence by pressing the corresponding buttons.
 
 **Key Innovation**: Non-blocking event-driven architecture with EXTI interrupt handlers, circular event queue, and state-specific handlers—no polling or blocking calls.
 
