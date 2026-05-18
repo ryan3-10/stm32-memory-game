@@ -2,6 +2,9 @@
 
 A Simon Says implementation on the **STM32F407** microcontroller, demonstrating interrupt-driven input handling, non-blocking event-driven architecture, and bare-metal embedded systems design.
 
+## Demo Video
+[Watch the Demo](https://youtube.com/shorts/naQB-Cir1FA)
+
 ## Overview
 
 This project implements a classic memory/pattern matching game on an ARM Cortex-M4 microcontroller. The game displays increasingly complex sequences of colored lights (up to 15 rounds); the player must reproduce each sequence by pressing corresponding buttons.
