@@ -29,7 +29,7 @@ This project implements a classic memory/pattern matching game on an ARM Cortex-
 | **RNG** | Hardware random number generator |
 | **SysTick** | Timer for delays and debouncing |
 
-**Pins**: Green=PE6/PC5, White=PE2/PC9, Blue=PED/PC7, Red=PEF/PC6
+**Pins (Light/Button)**: Green=PE6/PC5, White=PE2/PC9, Blue=PED/PC7, Red=PEF/PC6
 
 ## Architecture
 
