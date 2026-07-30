@@ -16,13 +16,15 @@ void EXTI9_5_IRQHandler(void) {
 
 			uint32_t now = get_ms_ticks();
 
+			// If button is pressed and it is not a debounce press, set the press time of the button
 			if (is_pressed((BUTTON)i) && !last_press_times[i]) {
 				last_press_times[i] = now;
+			// If the button is not pressed and it is not a debounce release, push the button press to the event queue
 			} else if (!is_pressed((BUTTON)i) && now - last_press_times[i] > DEBOUNCE_THRESHOLD) {
 				EVENT event = {EVENT_BUTTON, (BUTTON)i};
 				eq_push(event);
+				last_press_times[i] = 0; // Reset the button's press time so it will be obvious that the next press is not a debounce press
 			}
-
 		}
 	}
 }
