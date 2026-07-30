@@ -65,7 +65,7 @@ void display_sequence() {
 	update_animation(&display);
 
 	if (display.state == DISPLAY_DONE) {
-		EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE, get_ms_ticks() };
+		EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE };
 		eq_push(event);
 	}
 }
@@ -83,7 +83,7 @@ void user_attempt() {
 	}
 
 	if (elapsed(start_time) >= game_get_round() * TIMEOUT_FACTOR) {
-		EVENT event = { EVENT_TIMEOUT, BUTTON_NONE, get_ms_ticks() };
+		EVENT event = { EVENT_TIMEOUT, BUTTON_NONE };
 		eq_push(event);
 	}
 }
@@ -109,7 +109,7 @@ void game_over_animation() {
 	update_animation(&display);
 
 	if (display.state == DISPLAY_DONE) {
-		EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE, get_ms_ticks() };
+		EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE };
 		eq_push(event);
 	}
 }
@@ -135,7 +135,7 @@ void victory_animation() {
 		update_animation(&display);
 
 		if (display.state == DISPLAY_DONE) {
-			EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE, get_ms_ticks() };
+			EVENT event = { EVENT_DISPLAY_DONE, BUTTON_NONE };
 			eq_push(event);
 		}
 }

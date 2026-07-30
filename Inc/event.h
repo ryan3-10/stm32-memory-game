@@ -16,7 +16,6 @@ typedef enum {
 typedef struct {
 	EVENT_TYPE type;
 	BUTTON button;
-	uint32_t timestamp;
 } EVENT;
 
 typedef struct {

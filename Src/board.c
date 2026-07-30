@@ -67,6 +67,12 @@ void exti_init() {
 	EXTI->RTSR |= 1 << BLUE_BUTTON_PIN;
 	EXTI->RTSR |= 1 << RED_BUTTON_PIN;
 
+	// Set falling trigger selection for for each EXTI associated with a button's pin
+	EXTI->FTSR |= 1 << GREEN_BUTTON_PIN;
+	EXTI->FTSR |= 1 << WHITE_BUTTON_PIN;
+	EXTI->FTSR |= 1 << BLUE_BUTTON_PIN;
+	EXTI->FTSR |= 1 << RED_BUTTON_PIN;
+
 	// Enable the IRQ for EXTI5 - EXTI9
 	NVIC->ISER[0] |= 1 << IRQ5_9_POS;
 }
